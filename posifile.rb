@@ -20,6 +20,11 @@ class Posifile
 	end
 
 	def self.valid_specification?
+		gap_in_specification?
+		# add mor validations here
+	end
+
+	def self.gap_in_specification?
 		num_ar = []
 		@@specification[self].each_value do |range|
 			range.each do |item|
