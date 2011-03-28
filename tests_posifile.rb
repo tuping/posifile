@@ -67,4 +67,12 @@ class TestPosifile < Test::Unit::TestCase
 	def test_valid_false
 		assert !Client.valid?("invalid.txt")
 	end
+
+	def test_valid_specification_true
+		assert Client.valid_specification?
+	end
+
+	def test_valid_specification_false
+		assert WithGap.valid_specification?
+	end
 end

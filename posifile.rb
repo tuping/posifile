@@ -19,6 +19,20 @@ class Posifile
 		end
 	end
 
+	def self.valid_specification?
+		num_ar = []
+		@@specification[self].each_value do |range|
+			range.each do |item|
+				num_ar << true
+			end
+		end
+		if num_ar.include? nil
+			return false
+		else
+			return true
+		end
+	end
+
 	def self.higher
 		higher_number = 0
 		@@specification[self].each_value do |range|
