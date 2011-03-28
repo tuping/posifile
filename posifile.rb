@@ -7,9 +7,29 @@ class Posifile
 		@@specification = hash
 	end
 
+	def self.valid?(file_name)
+		file  = File.open(file_name, "r")
+		length = file.readline.length
+		higher_number = higher
+		if length == higher_number+1
+			true
+		else
+			false
+		end
+	end
+
+	def self.higher
+		higher_number = 0
+		@@specification.each_value do |range|
+			if range.max > higher_number
+					higher_number = range.max
+			end
+		end
+		higher_number
+	end
+
 	def initialize(data_file_name)
 		@data_file = data_file_name
-		puts data_file
 		build_attriubutes_from_hash
 	end
 

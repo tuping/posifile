@@ -13,4 +13,11 @@ module TestHelpers
 		sample.close
 	end
 
+	def create_sample_invalid
+		content = "Richard  New Orleans        USA      "
+		sample = File.new("invalid.txt","wb")
+		sample.puts content
+		sample.close
+	end
+
 end

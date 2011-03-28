@@ -16,6 +16,7 @@ class TestPosifile < Test::Unit::TestCase
 	def setup
 		create_sample_file
 		create_sample_file2
+		create_sample_invalid
 	end
 
 	def test_posifile
@@ -43,8 +44,20 @@ class TestPosifile < Test::Unit::TestCase
 	end
 
 	def test_field_value
-	c = Client.new("sample.txt")
+		c = Client.new("sample.txt")
 
-	assert_equal "jose", c.field_value("name")
+		assert_equal "jose", c.field_value("name")
+	end
+
+	def test_higher
+	assert_equal 42, Client.higher
+	end
+
+	def test_valid_true
+		assert Client.valid?("sample.txt")
+	end
+
+	def test_valid_false
+		assert !Client.valid?("invalid.txt")
 	end
 end
