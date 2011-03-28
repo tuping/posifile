@@ -20,8 +20,24 @@ class Posifile
 	end
 
 	def self.valid_specification?
-		gap_in_specification?
+		is_valid = gap_in_specification?
 		# add mor validations here
+	end
+
+	def self.overlap_in_specification?
+		num_ar = []
+		@@specification[self].each_value do |range|
+			range.each do |item|
+				num_ar[item] ||= 0
+				num_ar[item] += 1
+			end
+		end
+		puts num_ar.inspect
+		if num_ar.include?(2)
+			return false
+		else
+			return true
+		end
 	end
 
 	def self.gap_in_specification?

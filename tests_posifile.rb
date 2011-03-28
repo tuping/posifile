@@ -16,6 +16,10 @@ class WithGap <Posifile
 										)
 end
 
+
+class WithOverlap < Posifile
+	set_specification("name"=>0..8, "address" => 8..20, "job" => 16..30)
+end
 class TestPosifile < Test::Unit::TestCase
 
 	include TestHelpers
@@ -60,6 +64,7 @@ class TestPosifile < Test::Unit::TestCase
 	assert_equal 42, Client.higher
 	end
 
+#-------Validations---------------
 	def test_valid_true
 		assert Client.valid?("sample.txt")
 	end
@@ -74,5 +79,13 @@ class TestPosifile < Test::Unit::TestCase
 
 	def test_valid_specification_false
 		assert WithGap.valid_specification?
+	end
+	#especifics -------------
+	def test_overlap_in_specification
+		assert !WithOverlap.overlap_in_specification?
+	end
+
+	def test_overlap_in_specification
+		assert Client.overlap_in_specification?
 	end
 end
