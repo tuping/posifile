@@ -1,0 +1,32 @@
+== Posifile
+
+This library is intended to make it easier to read/write any kind of position file.
+All you have to do is write in the model how each position will be associated to each objects attributes.
+
+Example of usage:
+#client
+require 'posifile'
+
+class Client < Posifile 
+	set_data_file "path/to/file.txt"
+	set_specification {
+											"name"="0..10", 
+											"city"=>"11..31",
+											"country"=>"32..50"
+										}
+	#you can put here any other method you 'd like
+
+end
+
+Client.validade("path_to/other_file.txt") #check
+
+client = Client.new
+client.name
+client.city
+cliennt.country
+
+=== feedback
+
+Email: marcofognog@gmail.com
+Any ideas on how we can make this better will be appreciated.
+
