@@ -9,7 +9,6 @@ Example of usage:
 	require 'posifile'
 
 	class Client < Posifile 
-		set_data_file "path/to/file.txt"
 		set_specification {
 												"name"="0..10", 
 												"city"=>"11..31",
@@ -19,9 +18,9 @@ Example of usage:
 
 	end
 
-	Client.validade("path_to/other_file.txt") #check
+	Client.validate("path_to/other_file.txt") #check
 
-	client = Client.new
+	client = Client.new("path/to/file.txt")
 	client.name
 	client.city
 	cliennt.country
