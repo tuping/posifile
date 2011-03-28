@@ -18,14 +18,20 @@ class Posifile
 	def field_value(field_name)
 		content = file_content
 		content_ar = content.split('')
-		value = ''
+		value_str = ''
 		range = @@specification[field_name]
 		range.each do |n|
-				value.concat content_ar[n]
+				value_str.concat content_ar[n]
 		end
-		value.split(' ')[0]
+		value_parse value_str
 	end
-	
+
+	# get the value ignoring white spaces after that.
+	def value_parse(value_string)
+		ar = value_string.split(' ')
+		ar.join(' ')
+	end
+
 
 	def build_attriubutes_from_hash
 		@@specification.each do |key, not_used|

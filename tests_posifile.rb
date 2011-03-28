@@ -27,7 +27,13 @@ class TestPosifile < Test::Unit::TestCase
 	def test_posifile2
 		client = Client.new
 		client.build_attriubutes_from_hash
-		assert_equal "sorocaba", client.city
+		assert_equal "new york", client.city
+	end
+
+	def test_value_parse
+		c = Client.new
+
+		assert_equal "esta frase precisa estar completa !", c.value_parse("esta frase precisa estar completa !                 ")
 	end
 
 	def test_field_value
