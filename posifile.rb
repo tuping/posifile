@@ -10,6 +10,10 @@ class Posifile
 		@@data_file = path_to_file
 	end
 
+	def initialize
+		build_attriubutes_from_hash
+	end
+
 	def file_content
 		file = File.open(@@data_file,"r")
 		file.readline

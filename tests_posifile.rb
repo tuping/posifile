@@ -20,13 +20,11 @@ class TestPosifile < Test::Unit::TestCase
 
 	def test_posifile
 		client = Client.new
-		client.build_attriubutes_from_hash
 		assert_equal "jose", client.name
 	end
 
 	def test_posifile2
 		client = Client.new
-		client.build_attriubutes_from_hash
 		assert_equal "new york", client.city
 	end
 
