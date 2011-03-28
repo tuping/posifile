@@ -1,21 +1,20 @@
 class Posifile
-	@@data_file = ''
 	@@specification = {}
+
+	attr_accessor :data_file
 
 	def self.set_specification(hash)
 		@@specification = hash
 	end
-	
-	def self.set_data_file(path_to_file)
-		@@data_file = path_to_file
-	end
 
-	def initialize
+	def initialize(data_file_name)
+		@data_file = data_file_name
+		puts data_file
 		build_attriubutes_from_hash
 	end
 
 	def file_content
-		file = File.open(@@data_file,"r")
+		file = File.open(@data_file,"r")
 		file.readline
 	end
 
@@ -30,7 +29,7 @@ class Posifile
 		value_parse value_str
 	end
 
-	# get the value ignoring white spaces after that.
+	# get the value ignoring white spaces in th end of the string.
 	def value_parse(value_string)
 		ar = value_string.split(' ')
 		ar.join(' ')
@@ -39,7 +38,7 @@ class Posifile
 
 	def build_attriubutes_from_hash
 		@@specification.each do |key, not_used|
-			Posifile.class_eval "
+			self.instance_eval "
 				def #{key}
 					\"#{field_value(key)}\"
 				end

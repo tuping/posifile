@@ -5,6 +5,12 @@ module TestHelpers
 		sample.puts content
 		sample.close
 	end
-	def delete_sample_file
+
+	def create_sample_file2
+		content = "Richard    New Orleans          USA        "
+		sample = File.new("sample2.txt","wb")
+		sample.puts content
+		sample.close
 	end
+
 end
