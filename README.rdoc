@@ -18,7 +18,7 @@ Example of usage:
 
 	end
 
-	Client.validate("path_to/other_file.txt") #check
+	Client.valid?("path_to/other_file.txt") #check
 
 	client = Client.new("path/to/file.txt")
 	client.name
