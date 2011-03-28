@@ -18,18 +18,17 @@ class Posifile
 	def field_value(field_name)
 		content = file_content
 		content_ar = content.split('')
-		result = ''
+		value = ''
 		range = @@specification[field_name]
 		range.each do |n|
-				result.concat content_ar[n]
+				value.concat content_ar[n]
 		end
-		return result.split(' ')[0]
+		value.split(' ')[0]
 	end
 	
 
 	def build_attriubutes_from_hash
 		@@specification.each do |key, not_used|
-			
 			Posifile.class_eval "
 				def #{key}
 					\"#{field_value(key)}\"
