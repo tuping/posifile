@@ -4,7 +4,8 @@ class Posifile
 	attr_accessor :data_file
 
 	def self.set_specification(hash)
-		@@specification = hash
+		@@specification[self] ||= {}
+		@@specification[self] = hash
 	end
 
 	def self.valid?(file_name)
@@ -20,7 +21,7 @@ class Posifile
 
 	def self.higher
 		higher_number = 0
-		@@specification.each_value do |range|
+		@@specification[self].each_value do |range|
 			if range.max > higher_number
 					higher_number = range.max
 			end
@@ -42,7 +43,7 @@ class Posifile
 		content = file_content
 		content_ar = content.split('')
 		value_str = ''
-		range = @@specification[field_name]
+		range = @@specification[self.class][field_name]
 		range.each do |n|
 				value_str.concat content_ar[n]
 		end
@@ -57,7 +58,7 @@ class Posifile
 
 
 	def build_attriubutes_from_hash
-		@@specification.each do |key, not_used|
+		@@specification[self.class].each do |key, not_used|
 			self.instance_eval "
 				def #{key}
 					\"#{field_value(key)}\"

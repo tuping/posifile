@@ -9,6 +9,13 @@ class Client < Posifile
 										)
 end
 
+class WithGap <Posifile
+	set_specification("name"=>0..10, 
+											"city"=>11..31,
+											"country"=>36..52
+										)
+end
+
 class TestPosifile < Test::Unit::TestCase
 
 	include TestHelpers
