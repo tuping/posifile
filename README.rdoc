@@ -6,10 +6,11 @@ All you have to do is write in the model how each position will be associated to
 === Usage
 Example of usage:
 	#client
+	require 'rubygems'
 	require 'posifile'
 
 	class Client < Posifile 
-		set_specification {
+		set_specification{
 												"name"="0..10", 
 												"city"=>"11..31",
 												"country"=>"32..50"
