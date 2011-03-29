@@ -31,31 +31,31 @@ class TestPosifile < Test::Unit::TestCase
 	end
 
 	def test_posifile
-		client = Client.new("sample.txt")
+		client = Client.new("samples/sample.txt")
 		assert_equal "jose", client.name
 	end
 
 	def test_posifile2
-		client = Client.new("sample2.txt")
+		client = Client.new("samples/sample2.txt")
 		assert_equal "New Orleans", client.city
 	end
 
 	def test_posifile_with_two_objects
-		client1 = Client.new("sample.txt")
-		client2 = Client.new("sample2.txt")
+		client1 = Client.new("samples/sample.txt")
+		client2 = Client.new("samples/sample2.txt")
 	
 		assert_equal "jose", client1.name
 		assert_equal "New Orleans", client2.city
 	end
 
 	def test_value_parse
-		c = Client.new("sample.txt")
+		c = Client.new("samples/sample.txt")
 
 		assert_equal "esta frase precisa estar completa !", c.value_parse("esta frase precisa estar completa !                 ")
 	end
 
 	def test_field_value
-		c = Client.new("sample.txt")
+		c = Client.new("samples/sample.txt")
 
 		assert_equal "jose", c.field_value("name")
 	end
@@ -65,21 +65,23 @@ class TestPosifile < Test::Unit::TestCase
 	end
 
 #-------Validations---------------
-	def test_valid_true
-		assert Client.valid?("sample.txt")
-	end
 
 	def test_valid_false
-		assert !Client.valid?("invalid.txt")
+		assert !Client.valid?("samples/invalid.txt")
+	end
+
+	def test_valid_true
+		assert Client.valid?("samples/sample.txt")
+	end
+
+	def test_valid_specification_false
+		assert !WithGap.valid_specification?
 	end
 
 	def test_valid_specification_true
 		assert Client.valid_specification?
 	end
 
-	def test_valid_specification_false
-		assert !WithGap.valid_specification?
-	end
 	#especifics -------------
 	def test_overlap_in_specification_false
 		assert !WithOverlap.overlap_in_specification?
@@ -89,11 +91,11 @@ class TestPosifile < Test::Unit::TestCase
 		assert Client.overlap_in_specification?
 	end
 
-	def test_gap_in_specification_true
-		assert Client.gap_in_specification?
-	end
-
 	def test_gap_in_specification_false
 		assert !WithGap.gap_in_specification?
+	end
+
+	def test_gap_in_specification_true
+		assert Client.gap_in_specification?
 	end
 end
