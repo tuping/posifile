@@ -23,6 +23,14 @@ class TestValidations < Test::Unit::TestCase
 		assert Client.valid_specification?
 	end
 
+	def test_valid_specification_false
+		assert !BothGapAndOverlap.valid_specification?
+	end
+
+	def test_valid_specification_true
+		assert Client.valid_specification?
+	end
+
 	#especifics -------------
 	def test_overlap_in_specification_false
 		assert !WithOverlap.overlap_in_specification?

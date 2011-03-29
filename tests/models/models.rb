@@ -17,3 +17,7 @@ end
 class WithOverlap < Posifile
 	set_specification("name"=>0..8, "address" => 8..20, "job" => 16..30)
 end
+
+class BothGapAndOverlap < Posifile
+	set_specification("name"=>0..8, "address" => 10..20, "job" => 16..30)
+end

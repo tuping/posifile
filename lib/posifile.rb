@@ -20,11 +20,8 @@ class Posifile
 	end
 
 	def self.valid_specification?
-		if gap_in_specification? ||	is_valid = overlap_in_specification?
-			return false
-		else
-			return true
-		end
+		is_valid = gap_in_specification?
+		# add mor validations here
 	end
 
 	def self.overlap_in_specification?
