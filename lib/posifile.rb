@@ -16,8 +16,10 @@ class Posifile
 	def initialize(data_file_name)
 		@data_file = data_file_name
 
-		#faça uma leitura linha a linha  e chame o build_attributes passando qual vai ser o specificatoin
-			build_attriubutes_from_hash(@@specification[self.class])
+		#faça uma leitura linha a linha  e chame o build_attributes passando qual vai ser o specification
+		file_content.each do |line|
+			build_attriubutes_from_hash(@@specification[self.class], line)
+		end
 	end
 
 
@@ -91,12 +93,11 @@ class Posifile
 
 	def file_content
 		file = File.open(@data_file,"r")
-		file.readlines[0]
+		file.readlines
 	end
 
-	def field_value(field_name,specification_hash)
-		content = file_content
-		content_ar = content.split('')
+	def field_value(field_name,specification_hash,line)
+		content_ar = line.split('')
 		value_str = ''
 		range = specification_hash[field_name]
 		range.each do |n|
@@ -112,12 +113,12 @@ class Posifile
 	end
 
 
-	def build_attriubutes_from_hash(specification_hash)
+	def build_attriubutes_from_hash(specification_hash,line)
 		#receba um specification como argumento
 		specification_hash.each do |key, not_used|
 			self.instance_eval "
 				def #{key}
-					\"#{field_value(key,specification_hash)}\"
+					\"#{field_value(key, specification_hash, line)}\"
 				end
 			"
 		end
