@@ -37,7 +37,7 @@ class TestPosifile < Test::Unit::TestCase
 
 	def test_field_value
 		c = Client.new("samples/sample.txt")
-		assert_equal "jose", c.field_value("name")
+		assert_equal "jose", c.field_value("name",{"name"=>0..10, "city"=>11..31, "country"=>32..42})
 	end
 
 	def test_higher

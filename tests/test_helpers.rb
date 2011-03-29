@@ -27,4 +27,12 @@ module TestHelpers
 		sample.close
 	end
 
+	def create_car_sample
+		create_folder
+		content = "001yellow    002blue      "
+		sample = File.new("samples/car_sample.txt","wb")
+		sample.puts content
+		sample.close
+	end
+
 end
