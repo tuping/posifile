@@ -1,0 +1,9 @@
+require 'rake/testtask'
+
+task :default => [:test]
+
+desc "Run basic tasks"
+Rake::TestTask.new("test") do |t|
+	t.libs << ["../lib","models"]
+	t.test_files = FileList['test*.rb']
+end
