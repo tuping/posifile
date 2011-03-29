@@ -32,7 +32,6 @@ class Posifile
 				num_ar[item] += 1
 			end
 		end
-		puts num_ar.inspect
 		if num_ar.include?(2)
 			return false
 		else
