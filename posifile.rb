@@ -43,7 +43,8 @@ class Posifile
 		num_ar = []
 		@@specification[self].each_value do |range|
 			range.each do |item|
-				num_ar << true
+				num_ar[item] ||= 0
+				num_ar[item] += 1
 			end
 		end
 		if num_ar.include? nil

@@ -78,14 +78,22 @@ class TestPosifile < Test::Unit::TestCase
 	end
 
 	def test_valid_specification_false
-		assert WithGap.valid_specification?
+		assert !WithGap.valid_specification?
 	end
 	#especifics -------------
-	def test_overlap_in_specification
+	def test_overlap_in_specification_false
 		assert !WithOverlap.overlap_in_specification?
 	end
 
-	def test_overlap_in_specification
+	def test_overlap_in_specification_true
 		assert Client.overlap_in_specification?
+	end
+
+	def test_gap_in_specification_true
+		assert Client.gap_in_specification?
+	end
+
+	def test_gap_in_specification_false
+		assert !WithGap.gap_in_specification?
 	end
 end
