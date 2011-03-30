@@ -27,21 +27,21 @@ module TestHelpers
 		sample.close
 	end
 
-	def create_car1_sample
+	def create_one_line_sample
 		create_folder
-		unless File.exist?("samples/car1_sample.txt")
+		unless File.exist?("samples/one_line_sample.txt")
 			content = "001yellow    "
-			sample = File.new("samples/car1_sample.txt","wb")
+			sample = File.new("samples/one_line_sample.txt","wb")
 			sample.puts content
 			sample.close
 		end
 	end
 
-	def create_car2_sample
+	def create_two_lines_sample
 		create_folder
-		unless File.exist?("samples/car2_sample.txt")
+		unless File.exist?("samples/two_lines_sample.txt")
 			content = "001yellow    \n002blue      "
-			sample = File.new("samples/car2_sample.txt","wb")
+			sample = File.new("samples/two_lines_sample.txt","wb")
 			sample.puts content
 			sample.close
 		end
