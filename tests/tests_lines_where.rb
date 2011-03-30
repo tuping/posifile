@@ -1,35 +1,7 @@
 require 'posifile'
 require 'test/unit'
 require 'test_helpers'
-
-class OneLineWithOneSpec < Posifile
-
-	# just one specification, for a one-line file
-	lines_where 0..2, "001" do
-		set_specification("color"=>3..9)
-	end
-end
-
-class TwoLinesWithOneSpec < Posifile
-
-	# just one specification, for a two-line file, should raise exception on initialize
-	# this should raise exception, but it doenst yet, and dont have tests for this.
-	lines_where 0..2, "002" do
-		set_specification("color1"=>3..9)
-	end
-end
-
-class TwoLinesWithTwoSpecs < Posifile
-
-	# two specifications, for a two-line file, work fine
-	lines_where 0..2, "001" do
-		set_specification("color1"=>3..9)
-	end
-
-	lines_where 0..2, "002" do
-		set_specification("color2"=>3..9)
-	end
-end
+require 'models/models'
 
 class TestLinesWhere < Test::Unit::TestCase
 	include TestHelpers
@@ -39,19 +11,25 @@ class TestLinesWhere < Test::Unit::TestCase
 	end
 	
 
-	def test_lines_where_only_one_line
+	def test_lines_where_one_line_one_spec
 		car = OneLineWithOneSpec.new("samples/one_line_sample.txt")
 		assert_equal "yellow", car.color
 	end
 
-#	def test_lines_where_undefined
-#		assert_raise(UndefinedSpecification) { car = Car2.new("samples/car2_sample.txt") }
-#	end
-
-	def test_lines_where
+	def test_lines_where_two_lines_two_specs
 		car = TwoLinesWithTwoSpecs.new("samples/two_lines_sample.txt")
 		assert_equal "yellow", car.color1
 		assert_equal "blue", car.color2
 	end
+
+	def test_lines_where_two_lines_one_spec_yellow
+		car = TwoLinesWithOneSpec.new("samples/two_lines_sample.txt")
+		assert_equal "yellow", car.color1
+	end
+
+
+#	def test_lines_where_undefined
+#		assert_raise(UndefinedSpecification) { car = Car2.new("samples/car2_sample.txt") }
+#	end
 end
 

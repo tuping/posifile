@@ -7,6 +7,8 @@ class Client < Posifile
 										)
 end
 
+#Used in validations tests -------------------
+
 class WithGap <Posifile
 	set_specification("name"=>0..10, 
 											"city"=>11..31,
@@ -20,4 +22,37 @@ end
 
 class BothGapAndOverlap < Posifile
 	set_specification("name"=>0..8, "address" => 10..20, "job" => 16..30)
+end
+#--------------------------------------------
+
+
+#used in lines_where tests ------------------
+
+class OneLineWithOneSpec < Posifile
+
+	# just one specification, for a one-line file
+	lines_where 0..2, "001" do
+		set_specification("color"=>3..9)
+	end
+end
+
+class TwoLinesWithTwoSpecs < Posifile
+
+	# two specifications, for a two-line file, work fine
+	lines_where 0..2, "001" do
+		set_specification("color1"=>3..9)
+	end
+
+	lines_where 0..2, "002" do
+		set_specification("color2"=>3..9)
+	end
+end
+
+class TwoLinesWithOneSpec < Posifile
+
+	# just one specification, for a two-line file, should raise exception on initialize
+	# but it doenst yet, and dont have tests for this, but seems to work.
+	lines_where 0..2, "001" do
+		set_specification("color1"=>3..9)
+	end
 end
