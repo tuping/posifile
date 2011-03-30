@@ -11,7 +11,7 @@ end
 class TestLinesWhere < Test::Unit::TestCase
 	
 	def test_check_condition
-		c = Person.new("samples/car1_sample.txt")
+		c = Person.new("samples/one_line_sample.txt")
 
 		assert c.check_condition({0..2=>"001"}, "001opa")
 	end
