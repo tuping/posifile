@@ -1,36 +1,29 @@
 class Posifile
-	@@specification = {}
+	@@specifications = {}
+	@@conditions = {}
+
 
 	attr_accessor :data_file
-
-
-#experimental
-	@@var = ''
-
-	def self.var
-		@@var
-	end
-
-#experimental
 
 	def initialize(data_file_name)
 		@data_file = data_file_name
 
-		#faça uma leitura linha a linha  e chame o build_attributes passando qual vai ser o specification
 		file_content.each do |line|
-			build_attriubutes_from_hash(@@specification[self.class], line)
+			index = specification_index(line)
+			build_attributes_from_hash(@@specifications[self.class][index], line)
 		end
 	end
 
 
 	def self.set_specification(hash)
-		@@specification[self] ||= {}
-		@@specification[self] = hash
+		@@specifications[self] ||= []
+		@@specifications[self] << hash
 	end
 
 	def self.lines_where(range,value,&block)
-		#armazene os dois specifications passados
-		@@var = "001color"
+
+		@@conditions[self] ||= []
+		@@conditions[self] << {range,value}
 		yield
 	end
 
@@ -52,37 +45,47 @@ class Posifile
 
 	def self.overlap_in_specification?
 		num_ar = []
-		@@specification[self].each_value do |range|
-			range.each do |item|
-				num_ar[item] ||= 0
-				num_ar[item] += 1
+		@@specifications[self].each_with_index do |spec,index|
+			spec.each_value do |range|
+				range.each do |item|
+					num_ar[index] ||= []
+					num_ar[index][item] ||= 0
+					num_ar[index][item] += 1
+				end
 			end
 		end
-		if num_ar.include?(2)
-			return false
-		else
-			return true
+		valid = true
+		num_ar.each do |array|
+			if array.include?(2)
+				valid = false
+			end
 		end
+		valid
 	end
 
 	def self.gap_in_specification?
 		num_ar = []
-		@@specification[self].each_value do |range|
-			range.each do |item|
-				num_ar[item] ||= 0
-				num_ar[item] += 1
+		@@specifications[self].each_with_index do |spec, index|
+			spec.each_value do |range|
+				range.each do |item|
+					num_ar[index] ||= []
+					num_ar[index][item] ||= 0
+					num_ar[index][item] += 1
+				end
 			end
 		end
-		if num_ar.include? nil
-			return false
-		else
-			return true
+		valid = true
+		num_ar.each do |array|
+			if array.include? nil
+				valid = false
+			end
 		end
+		valid
 	end
 
 	def self.higher
 		higher_number = 0
-		@@specification[self].each_value do |range|
+		@@specifications[self][0].each_value do |range|
 			if range.max > higher_number
 					higher_number = range.max
 			end
@@ -90,6 +93,27 @@ class Posifile
 		higher_number
 	end
 
+	def specification_index(line)
+		i = 0
+		unless @@conditions[self.class].nil?
+			@@conditions[self.class].each_with_index do |hash, index|
+				if check_condition(hash,line)
+					i = index
+				end
+			end
+		end
+		i
+	end
+
+	def check_condition(condition_hash, line)
+			check = false
+			condition_hash.each do |range, value|
+				if line[range] == value
+					check = true
+				end
+			end
+			check
+	end
 
 	def file_content
 		file = File.open(@data_file,"r")
@@ -113,8 +137,7 @@ class Posifile
 	end
 
 
-	def build_attriubutes_from_hash(specification_hash,line)
-		#receba um specification como argumento
+	def build_attributes_from_hash(specification_hash,line)
 		specification_hash.each do |key, not_used|
 			self.instance_eval "
 				def #{key}
