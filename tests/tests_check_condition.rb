@@ -10,10 +10,16 @@ end
 
 class TestLinesWhere < Test::Unit::TestCase
 	
-	def test_check_condition
+	def test_check_condition_true
 		c = Person.new("samples/one_line_sample.txt")
 
 		assert c.check_condition({0..2=>"001"}, "001opa")
+	end
+
+	def test_check_condition_false
+		c = Person.new("samples/one_line_sample.txt")
+
+		assert !c.check_condition({0..2=>"001"}, "003opa")
 	end
 
 end
