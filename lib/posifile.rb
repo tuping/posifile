@@ -10,6 +10,9 @@ class Posifile
 		@data_file = data_file_name
 
 		file_content.each do |line|
+			if file_content.length == 1
+				build_attributes_from_hash(@@specifications[self.class][0], line)
+			end
 			specification_index(line) do |line_,index|
 				build_attributes_from_hash(@@specifications[self.class][index], line_)
 			end
