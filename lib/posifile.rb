@@ -1,3 +1,4 @@
+require 'errors'
 class Posifile
 	@@specifications = {}
 	@@conditions = {}
@@ -9,8 +10,9 @@ class Posifile
 		@data_file = data_file_name
 
 		file_content.each do |line|
-			index = specification_index(line)
-			build_attributes_from_hash(@@specifications[self.class][index], line)
+			specification_index(line) do |line_,index|
+				build_attributes_from_hash(@@specifications[self.class][index], line_)
+			end
 		end
 	end
 
@@ -96,9 +98,11 @@ class Posifile
 	def specification_index(line)
 		i = 0
 		unless @@conditions[self.class].nil?
-			@@conditions[self.class].each_with_index do |hash, index|
+			@@conditions[self.class].each_with_index do |hash, num|
 				if check_condition(hash,line)
-					i = index
+					yield line, num
+				else
+					puts " Warning, there is registers not defined. Please define one spec for #{line}"
 				end
 			end
 		end
@@ -106,6 +110,7 @@ class Posifile
 	end
 
 	def check_condition(condition_hash, line)
+
 			check = false
 			condition_hash.each do |range, value|
 				if line[range] == value

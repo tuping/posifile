@@ -1,0 +1,2 @@
+class UndefinedSpecification < Exception
+end
