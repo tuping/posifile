@@ -17,14 +17,15 @@ class TestLinesWhere < Test::Unit::TestCase
 	end
 
 	def test_lines_where_two_lines_two_specs
-		car = TwoLinesWithTwoSpecs.new("samples/two_lines_sample.txt")
-		assert_equal "yellow", car.color1
-		assert_equal "blue", car.color2
+		car = MultiLinesWithTwoSpecs.new("samples/multi_line_sample.txt")
+		assert_equal "fusca", car.carros
+		assert_equal "BEGE", car.color
+		assert_equal "harley", car.motos
 	end
 
 	def test_lines_where_two_lines_one_spec_yellow
-		car = TwoLinesWithOneSpec.new("samples/two_lines_sample.txt")
-		assert_equal "yellow", car.color1
+		car = MultiLinesWithOneSpec.new("samples/multi_line_sample.txt")
+		assert_equal "fusca", car.carros
 	end
 
 

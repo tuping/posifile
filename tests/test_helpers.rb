@@ -39,9 +39,15 @@ module TestHelpers
 
 	def create_two_lines_sample
 		create_folder
-		unless File.exist?("samples/two_lines_sample.txt")
-			content = "001yellow    \n002blue      "
-			sample = File.new("samples/two_lines_sample.txt","wb")
+		unless File.exist?("samples/multi_line_sample.txt")
+			content = <<END
+001uno       yellow    
+002yamaha    blue      
+001vectra    white     
+002harley    black     
+001fusca     BEGE      
+END
+			sample = File.new("samples/multi_line_sample.txt","wb")
 			sample.puts content
 			sample.close
 		end
