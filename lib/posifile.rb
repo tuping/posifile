@@ -105,7 +105,7 @@ class Posifile
 				if check_condition(hash,line)
 					yield line, num
 				else
-					puts " Warning, there is registers not defined. Please define one spec for #{line}"
+					puts " Warning, there is registers not defined. Please define one spec for #{line} (Not.true, actually, its a bug in the library)"
 				end
 			end
 		end
