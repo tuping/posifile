@@ -41,6 +41,7 @@ class MultiLinesWithTwoSpecs < Posifile
 	# two specifications, for a two-line file, work fine
 	lines_where 0..2, "001" do
 		set_specification("carros"=>3..12, "color"=>13..22)
+		set_attr_name :carros
 	end
 
 	lines_where 0..2, "002" do

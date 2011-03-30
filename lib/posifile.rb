@@ -2,7 +2,7 @@ require 'errors'
 class Posifile
 	@@specifications = {}
 	@@conditions = {}
-
+	@@attr_names = {}
 
 	attr_accessor :data_file
 
@@ -11,10 +11,11 @@ class Posifile
 
 		file_content.each do |line|
 			if file_content.length == 1
-				build_attributes_from_hash(@@specifications[self.class][0], line)
-			end
-			specification_index(line) do |line_,index|
-				build_attributes_from_hash(@@specifications[self.class][index], line_)
+				build_attributes_from_hash(@@specifications[self.class][0], line, nil)
+			else
+				specification_index(line) do |line_,index|
+					build_attributes_from_hash(@@specifications[self.class][index], line_,@@attr_names[self.class][index])
+				end
 			end
 		end
 	end
@@ -30,6 +31,11 @@ class Posifile
 		@@conditions[self] ||= []
 		@@conditions[self] << {range,value}
 		yield
+	end
+
+	def self.set_attr_name(attr_name)
+		@@attr_names[self] ||= []
+		@@attr_names[self] << attr_name
 	end
 
 	def self.valid?(file_name)
@@ -105,18 +111,17 @@ class Posifile
 				if check_condition(hash,line)
 					yield line, num
 				else
-					puts " Warning, there is registers not defined. Please define one spec for #{line} (Not.true, actually, its a bug in the library)"
+					#puts " Warning, there is registers not defined. Please define one spec for #{line} (Not.true, actually, its a bug in the library)"
 				end
 			end
 		end
 		i
 	end
 
-	def check_condition(condition_hash, line)
-
+	def check_condition(condition_hash, checked_line)
 			check = false
 			condition_hash.each do |range, value|
-				if line[range] == value
+				if checked_line[range] == value
 					check = true
 				end
 			end
@@ -129,6 +134,9 @@ class Posifile
 	end
 
 	def field_value(field_name,specification_hash,line)
+		if field_name.class ==Symbol
+			field_name = field_name.to_s
+		end
 		content_ar = line.split('')
 		value_str = ''
 		range = specification_hash[field_name]
@@ -145,16 +153,24 @@ class Posifile
 	end
 
 
-	def build_attributes_from_hash(specification_hash,line)
-		specification_hash.each do |key, not_used|
-			self.instance_eval "
-				def #{key}
-					\"#{field_value(key, specification_hash, line)}\"
-				end
-			"
+	def build_attributes_from_hash(specification_hash,line,attr_name)
+		unless attr_name.nil?
+			specification_hash.each do |key, not_used|
+					self.instance_eval "
+						def #{field_value(attr_name,specification_hash,line)}\n
+							{\"#{key}\" =>\"#{field_value(key, specification_hash, line)}\"} \n
+						end
+					"
+			end
+		else
+			specification_hash.each do |key, not_used|
+					self.instance_eval "
+						def #{key}
+							\"#{field_value(key, specification_hash, line)}\"
+						end
+					"
+			end
 		end
 	end
-
-
 
 end
