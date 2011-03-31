@@ -16,16 +16,18 @@ class TestLinesWhere < Test::Unit::TestCase
 		assert_equal "yellow", car.color
 	end
 
-	def test_lines_where_two_lines_two_specs_1
+	def test_lines_where_two_lines_two_specs_1 
+		#with :color as attr_name
 		car = MultiLinesWithTwoSpecs1.new("samples/multi_line_sample.txt")
 
-		assert_equal "vectra", car.white['carros']
-		assert_equal "uno", car.yellow['carros']
+		assert_equal "vectra", car.white['brand']
+		assert_equal "uno", car.yellow['brand']
 		assert_equal "white", car.white['color']
 
 	end
 
 	def test_lines_where_two_lines_two_specs_2
+		#with :brand as attr_name
 		car = MultiLinesWithTwoSpecs2.new("samples/multi_line_sample.txt")
 
 		assert_equal Hash, car.fusca.class
