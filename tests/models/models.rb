@@ -36,11 +36,24 @@ class OneLineWithOneSpec < Posifile
 	end
 end
 
-class MultiLinesWithTwoSpecs < Posifile
+class MultiLinesWithTwoSpecs1 < Posifile
 
 	# two specifications, for a two-line file, work fine
 	lines_where 0..2, "001" do
-		set_specification("carros"=>3..12, "color"=>13..22)
+		set_specification( "color"=>13..22,"carros"=>3..12)
+		set_attr_name :color
+	end
+
+	lines_where 0..2, "002" do
+		set_specification("motos"=>3..12)
+	end
+end
+
+class MultiLinesWithTwoSpecs2 < Posifile
+
+	# two specifications, for a two-line file, work fine
+	lines_where 0..2, "001" do
+		set_specification( "color"=>13..22,"carros"=>3..12)
 		set_attr_name :carros
 	end
 

@@ -11,13 +11,25 @@ class TestLinesWhere < Test::Unit::TestCase
 	end
 	
 
-#	def test_lines_where_one_line_one_spec
-#		car = OneLineWithOneSpec.new("samples/one_line_sample.txt")
-#		assert_equal "yellow", car.color
-#	end
+	def test_lines_where_one_line_one_spec
+		car = OneLineWithOneSpec.new("samples/one_line_sample.txt")
+		assert_equal "yellow", car.color
+	end
 
-	def test_lines_where_two_lines_two_specs
-		car = MultiLinesWithTwoSpecs.new("samples/multi_line_sample.txt")
+	def test_lines_where_two_lines_two_specs_1
+		car = MultiLinesWithTwoSpecs1.new("samples/multi_line_sample.txt")
+		puts car.yellow.inspect
+		puts car.BEGE.inspect
+		puts car.white.inspect
+		puts car.white['carros']
+		assert_equal "vectra", car.white['carros']
+	end
+
+	def test_lines_where_two_lines_two_specs_2
+		car = MultiLinesWithTwoSpecs2.new("samples/multi_line_sample.txt")
+		puts car.fusca.inspect
+		puts car.vectra.inspect
+		puts car.uno.inspect
 		assert_equal Hash, car.fusca.class
 		assert_equal "BEGE",car.fusca['color']
 	end

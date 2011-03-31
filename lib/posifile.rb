@@ -155,13 +155,15 @@ class Posifile
 
 	def build_attributes_from_hash(specification_hash,line,attr_name)
 		unless attr_name.nil?
-			specification_hash.each do |key, not_used|
-					self.instance_eval "
-						def #{field_value(attr_name,specification_hash,line)}\n
-							{\"#{key}\" =>\"#{field_value(key, specification_hash, line)}\"} \n
-						end
-					"
+			values_hash = {}
+			specification_hash.each do |key, value|
+				values_hash[key] = field_value(key, specification_hash, line )##será que nao vale a pena mudar para => field_value(key,range,line) ?
 			end
+			self.instance_eval "
+				def #{field_value(attr_name,specification_hash,line)}\n
+					#{values_hash.inspect}\n
+				end
+			"
 		else
 			specification_hash.each do |key, not_used|
 					self.instance_eval "
