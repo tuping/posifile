@@ -29,7 +29,7 @@ class TestLinesWhere < Test::Unit::TestCase
 		car = MultiLinesWithTwoSpecs2.new("samples/multi_line_sample.txt")
 
 		assert_equal Hash, car.fusca.class
-		assert_equal "BEGE",car.fusca['color']
+		assert_equal "bege",car.fusca['color']
 	end
 
 #	def test_lines_where_two_lines_one_spec_yellow

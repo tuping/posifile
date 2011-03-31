@@ -2,4 +2,4 @@
 002yamaha    blue      
 001vectra    white     
 002harley    black     
-001fusca     BEGE      
+001fusca     bege      
