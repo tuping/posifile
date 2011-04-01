@@ -110,8 +110,6 @@ class Posifile
 			@@conditions[self.class].each_with_index do |hash, num|
 				if check_condition(hash,line)
 					yield line, num
-				else
-					#puts " Warning, there is registers not defined. Please define one spec for #{line} (Not.true, actually, its a bug in the library)"
 				end
 			end
 		end
