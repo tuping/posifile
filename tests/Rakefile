@@ -5,5 +5,5 @@ task :default => [:test]
 desc "Run basic tasks"
 Rake::TestTask.new("test") do |t|
 	t.libs << ["../lib","models"]
-	t.test_files = FileList['test*.rb']
+	t.test_files = FileList['test*.rb', 'lines_where/test*.rb','validations/test*.rb']
 end
