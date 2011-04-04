@@ -3,6 +3,13 @@ require 'test/unit'
 require 'test_helpers'
 require 'models/models'
 
+class Client < Posifile 
+	set_specification("name"=>0..10, 
+											"city"=>11..31,
+											"country"=>32..42
+										)
+end
+
 class TestPosifile < Test::Unit::TestCase
 
 	include TestHelpers

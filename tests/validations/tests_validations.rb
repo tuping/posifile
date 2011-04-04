@@ -1,7 +1,22 @@
 require 'posifile'
 require 'test/unit'
 require 'test_helpers'
-require 'models/models'
+
+class WithGap <Posifile
+	set_specification("name"=>0..10, 
+											"city"=>11..31,
+											"country"=>36..52
+										)
+end
+
+class WithOverlap < Posifile
+	set_specification("name"=>0..8, "address" => 8..20, "job" => 16..30)
+end
+
+class BothGapAndOverlap < Posifile
+	set_specification("name"=>0..8, "address" => 10..20, "job" => 16..30)
+end
+
 
 class TestValidations < Test::Unit::TestCase
 
