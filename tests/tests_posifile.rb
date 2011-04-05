@@ -9,7 +9,8 @@ class Client < Posifile
 										)
 end
 
-
+class NoSpec < Posifile
+end
 
 class TestPosifile < Test::Unit::TestCase
 
@@ -52,5 +53,9 @@ class TestPosifile < Test::Unit::TestCase
 		assert_equal 42, Client.higher
 	end
 
-
+	def test_no_spec_model
+		assert_raise(FieldsNotSpecified) do
+			no_spec = NoSpec.new("samples/sample.txt")
+		end
+	end
 end

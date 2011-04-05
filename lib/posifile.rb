@@ -9,6 +9,7 @@ class Posifile
 	def initialize(data_file_name)
 		@data_file = data_file_name
 
+		check_specification_hash
 		file_content.each do |line|
 			if file_content.length == 1
 				build_attributes_from_hash(@@specifications[self.class][0], line, nil)
@@ -118,6 +119,12 @@ class Posifile
 			end
 		end
 		higher_number
+	end
+
+	def check_specification_hash
+		if @@specifications[self.class].nil?
+			raise FieldsNotSpecified, "You should call set_specifications in you model, so we can build the object with the corresponding attribuites. Check documentation on how to do so."
+		end
 	end
 
 	def specification_index(line)
