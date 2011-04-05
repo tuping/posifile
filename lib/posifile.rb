@@ -191,8 +191,9 @@ class Posifile
 			specification_hash.each do |key, value|
 				values_hash[key] = field_value(key, specification_hash, line )
 			end
+			method_name = field_value(attr_name,specification_hash,line).downcase
 			self.instance_eval "
-				def #{field_value(attr_name,specification_hash,line).downcase}\n
+				def #{method_name}\n
 					#{values_hash.inspect}\n
 				end
 			"
