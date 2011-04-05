@@ -22,7 +22,7 @@ class TestValidations < Test::Unit::TestCase
 
 	include TestHelpers
 
-	def test_valid_specification_false
+	def test_valid_specification_gap_false
 		assert !WithGap.valid_specification?
 	end
 
@@ -30,24 +30,28 @@ class TestValidations < Test::Unit::TestCase
 		assert Client.valid_specification?
 	end
 
-	def test_valid_specification_false
+	def test_valid_specification_overlap_false
+		assert !WithOverlap.valid_specification?
+	end
+
+	def test_valid_specification_both_false
 		assert !BothGapAndOverlap.valid_specification?
 	end
 
 	#especifics -------------
-	def test_overlap_in_specification_false
-		assert !WithOverlap.overlap_in_specification?
-	end
+#	def test_overlap_in_specification_false
+#		assert !WithOverlap.overlap_in_specification?
+#	end
 
-	def test_overlap_in_specification_true
-		assert Client.overlap_in_specification?
-	end
-
-	def test_gap_in_specification_false
-		assert !WithGap.gap_in_specification?
-	end
-
-	def test_gap_in_specification_true
-		assert Client.gap_in_specification?
-	end
+#	def test_overlap_in_specification_true
+#		assert Client.overlap_in_specification?
+#	end
+#
+#	def test_gap_in_specification_false
+#		assert !WithGap.gap_in_specification?
+#	end
+#
+#	def test_gap_in_specification_true
+#		assert Client.gap_in_specification?
+#	end
 end

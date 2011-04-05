@@ -56,13 +56,16 @@ class Posifile
 	end
 
 	def self.valid_specification?
-		is_valid = gap_in_specification?
-		# add mor validations here
+		unless gap_in_specification?(@@specifications[self]) && overlap_in_specification?(@@specifications[self])
+			false
+		else
+			true
+		end
 	end
 
-	def self.overlap_in_specification?
+	def self.overlap_in_specification?(spec_hash)
 		num_ar = []
-		@@specifications[self].each_with_index do |spec,index|
+		spec_hash.each_with_index do |spec,index|
 			spec.each_value do |range|
 				range.each do |item|
 					num_ar[index] ||= []
@@ -80,9 +83,9 @@ class Posifile
 		valid
 	end
 
-	def self.gap_in_specification?
+	def self.gap_in_specification?(spec_hash)
 		num_ar = []
-		@@specifications[self].each_with_index do |spec, index|
+		spec_hash.each_with_index do |spec, index|
 			spec.each_value do |range|
 				range.each do |item|
 					num_ar[index] ||= []
