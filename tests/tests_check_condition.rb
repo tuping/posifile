@@ -8,7 +8,7 @@ class Person < Posifile
 	end
 end
 
-class TestLinesWhere < Test::Unit::TestCase
+class TestCheckCondition < Test::Unit::TestCase
 
 	include TestHelpers
 
