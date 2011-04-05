@@ -1,6 +1,6 @@
 require 'posifile'
 require 'test/unit'
-require 'models/models'
+
 
 class Person < Posifile
 	lines_where(0..2, "001") do 

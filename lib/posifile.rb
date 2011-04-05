@@ -20,10 +20,13 @@ class Posifile
 		end
 	end
 
-
 	def self.set_specification(hash)
-		@@specifications[self] ||= []
-		@@specifications[self] << hash
+		unless check_for_uppercase(hash)
+			@@specifications[self] ||= []
+			@@specifications[self] << hash
+		else
+			raise UppercaseFieldsError, "Fields names must be all downcase letters"
+		end
 	end
 
 	def self.lines_where(range,value,&block)
@@ -36,6 +39,19 @@ class Posifile
 	def self.set_attr_name(attr_name)
 		@@attr_names[self] ||= []
 		@@attr_names[self] << attr_name
+	end
+
+	def self.check_for_uppercase(hash)
+		check = false
+		hash.each_key do |key|
+			key.split('').each do |letter|
+				if letter.upcase ==letter
+					check = true
+				end
+			end
+		end
+
+		return check
 	end
 
 	def self.valid?(file_name)
