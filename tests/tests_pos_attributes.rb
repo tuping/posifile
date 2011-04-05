@@ -19,7 +19,7 @@ class MultiLinesWithTwoSpecs3 < Posifile
 end
 
 class TestPosAttributes < Test::Unit::TestCase
-# Here are general tests
+	# Here are general tests
 
 	include TestHelpers
 

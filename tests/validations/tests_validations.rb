@@ -22,14 +22,6 @@ class TestValidations < Test::Unit::TestCase
 
 	include TestHelpers
 
-	def test_valid_false
-		assert !Client.valid?("samples/invalid.txt")
-	end
-
-	def test_valid_true
-		assert Client.valid?("samples/sample.txt")
-	end
-
 	def test_valid_specification_false
 		assert !WithGap.valid_specification?
 	end

@@ -55,17 +55,6 @@ class Posifile
 		return check
 	end
 
-	def self.valid?(file_name)
-		file  = File.open(file_name, "r")
-		length = file.readline.length
-		higher_number = higher
-		if length == higher_number+1
-			true
-		else
-			false
-		end
-	end
-
 	def self.valid_specification?
 		is_valid = gap_in_specification?
 		# add mor validations here
