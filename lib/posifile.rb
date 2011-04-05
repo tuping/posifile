@@ -4,6 +4,7 @@ class Posifile
 	@@conditions = {}
 	@@attr_names = {}
 	@@pos_attr = {}
+
 	attr_accessor :data_file
 
 	def initialize(data_file_name)
@@ -14,6 +15,7 @@ class Posifile
 			if file_content.length == 1
 				build_attributes_from_hash(@@specifications[self.class][0], line, nil)
 			else
+				check_attr_names
 				specification_index(line) do |line_,index|
 					build_attributes_from_hash(@@specifications[self.class][index], line_,@@attr_names[self.class][index])
 				end
@@ -116,6 +118,16 @@ class Posifile
 	def check_specification_hash
 		if @@specifications[self.class].nil?
 			raise FieldsNotSpecified, "You should call set_specifications in you model, so we can build the object with the corresponding attribuites. Check documentation on how to do so."
+		end
+	end
+
+	def	check_attr_names
+		unless @@attr_names[self.class].nil?
+			if @@specifications[self.class].length != @@attr_names[self.class].length
+				raise AttrNameNotSpecified, "Every lines_where method must have one set_attr_name call."
+			end
+		else
+			raise AttrNameNotSpecified, "Every lines_where method must have one set_attr_name call."
 		end
 	end
 
