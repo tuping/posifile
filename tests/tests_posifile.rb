@@ -60,12 +60,4 @@ class TestPosifile < Test::Unit::TestCase
 		end
 	end
 
-	def test_pos_attributes
-		c = Client.new("samples/sample.txt")
-		puts c.pos_attributes
-		assert c.pos_attributes.include? "city"
-		assert c.pos_attributes.include? "name"
-		assert c.pos_attributes.include? "country"
-		assert_equal 3, c.pos_attributes.length
-	end
 end

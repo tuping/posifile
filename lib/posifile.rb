@@ -192,6 +192,7 @@ class Posifile
 				values_hash[key] = field_value(key, specification_hash, line )
 			end
 			method_name = field_value(attr_name,specification_hash,line).downcase
+			add_method_to_pos_attr(method_name)
 			self.instance_eval "
 				def #{method_name}\n
 					#{values_hash.inspect}\n
