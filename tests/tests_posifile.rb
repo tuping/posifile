@@ -13,6 +13,7 @@ class NoSpec < Posifile
 end
 
 class TestPosifile < Test::Unit::TestCase
+# Here are general tests
 
 	include TestHelpers
 
@@ -57,5 +58,14 @@ class TestPosifile < Test::Unit::TestCase
 		assert_raise(FieldsNotSpecified) do
 			no_spec = NoSpec.new("samples/sample.txt")
 		end
+	end
+
+	def test_pos_attributes
+		c = Client.new("samples/sample.txt")
+		puts c.pos_attributes
+		assert c.pos_attributes.include? "city"
+		assert c.pos_attributes.include? "name"
+		assert c.pos_attributes.include? "country"
+		assert_equal 3, c.pos_attributes.length
 	end
 end

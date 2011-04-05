@@ -3,7 +3,7 @@ class Posifile
 	@@specifications = {}
 	@@conditions = {}
 	@@attr_names = {}
-
+	@@pos_attr = {}
 	attr_accessor :data_file
 
 	def initialize(data_file_name)
@@ -173,12 +173,23 @@ class Posifile
 		ar.join(' ')
 	end
 
+	def pos_attributes
+		@@pos_attr[self.class]
+	end
+
+	def add_method_to_pos_attr(field)
+		@@pos_attr[self.class] ||= []
+		unless @@pos_attr[self.class].include? field
+			@@pos_attr[self.class] << field
+		end
+	end
 
 	def build_attributes_from_hash(specification_hash,line,attr_name)
+
 		unless attr_name.nil?
 			values_hash = {}
 			specification_hash.each do |key, value|
-				values_hash[key] = field_value(key, specification_hash, line ) # será que nao vale a pena mudar para => field_value(key,range,line) ?
+				values_hash[key] = field_value(key, specification_hash, line )
 			end
 			self.instance_eval "
 				def #{field_value(attr_name,specification_hash,line).downcase}\n
@@ -187,6 +198,7 @@ class Posifile
 			"
 		else
 			specification_hash.each do |key, not_used|
+					add_method_to_pos_attr(key)
 					self.instance_eval "
 						def #{key}
 							\"#{field_value(key, specification_hash, line)}\"
