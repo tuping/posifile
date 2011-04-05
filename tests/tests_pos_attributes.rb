@@ -9,7 +9,7 @@ class Client < Posifile
 										)
 end
 
-class MultiLinesWithTwoSpecs2 < Posifile
+class MultiLinesWithTwoSpecs3 < Posifile
 
 	# two specifications, for a multi-line file
 	lines_where 0..2, "001" do
@@ -32,7 +32,7 @@ class TestPosAttributes < Test::Unit::TestCase
 	end
 
 	def test_pos_attributes_multi_line
-		p = MultiLinesWithTwoSpecs2.new("samples/multi_line_sample.txt")
+		p = MultiLinesWithTwoSpecs3.new("samples/multi_line_sample.txt")
 		assert p.pos_attributes.include? "fusca"
 		assert p.pos_attributes.include? "uno"
 		assert p.pos_attributes.include? "vectra"
