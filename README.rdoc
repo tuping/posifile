@@ -4,8 +4,12 @@ This library is intended to make it easier to read/write any kind of position fi
 All you have to do is write in the model how each position will be associated to each objects attributes.
 
 === Usage
-Example of usage:
-	#client
+
+The most difficult thing to do is figure out how the file is laid out. Once you can 'see' the fields, using this library is easy.
+
+==== One line file
+This is the case where there is only one line per file, and each file constains one register. You need to tell your model wich position is what, like:
+	# client.rb
 	require 'rubygems'
 	require 'posifile'
 
@@ -15,16 +19,54 @@ Example of usage:
 												"city"=>"11..31",
 												"country"=>"32..50"
 											}
-		#you can put here any other method you 'd like
+		#you can put here any other method you'd like
 
 	end
 
-	Client.valid?("path_to/other_file.txt") #check
+And you will get as object attributes every key you specified in the above hash:
 
 	client = Client.new("path/to/file.txt")
 	client.name
 	client.city
 	cliennt.country
+
+Note that every key in the hash needs to be all downcase, because they'r gonna be method's names.
+
+==== Multi-line file 
+When the file you need to read has many sections and many registers in only one file, you can use some code (generally specified in some kind of document layout) to be able to tell to wich section some register belongs to. Here this code is in first three positions of the file.
+
+	# car
+	require 'rubygems'
+	require 'posifile'
+
+	class Client < Posifile 
+		lines_where 0..2, "001" do # this is some header of the file, and commonly has just one register
+			set_specification( "file_name"=>3..20, "date"=>21..29)
+			set_attr_name :file_name
+		end
+
+		lines_where 0..2, "002" do
+			set_specification( "color"=>25..29,"brand"=>3..16, "model"=>17..24)
+			set_attr_name :model
+		end
+	end
+
+Using lines_where you can have different specifications for different kinds of registers. But in this situation, the attribute's names of the object doesn't follow the same rules as before. The set_attr_name will tell what to use as attribute names. So, supposing the file is something like:
+
+	001first_file.txt    05052011
+	002Wolksvagen    Golf    red  
+	002Renault       Vivasix blue 
+	002Porsche       Boxter  black
+
+We would do:
+
+	client = Client.new("path/to/file.txt")
+	client.boxter['color'] # => 'black'
+	client.boxter['brand'] # =>'Porsche'
+	client.boxter['model'] # =>'Boxter'
+	cliennt.golf['color'] # => 'red'
+
+Notice that in multi-lin files, the method's names will always be the downcased version of the value found in the given position.
 
 === feedback
 
