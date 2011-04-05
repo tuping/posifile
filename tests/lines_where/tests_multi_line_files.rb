@@ -50,8 +50,15 @@ class MultiLinesWithUppercaseFields < Posifile
 	end
 end
 
+class NoSpecModel < Posifile
+	lines_where 0..2, "001" do
+	end
+end
+
 class TestLinesWhere < Test::Unit::TestCase
+
 	include TestHelpers
+
 	def setup
 		create_multi_lines_sample
 		create_multi_lines_sample_with_uppercase
@@ -87,9 +94,10 @@ class TestLinesWhere < Test::Unit::TestCase
 #		assert_equal "fusca", car.fusca["name"]
 #	end
 
-
-#	def test_lines_where_undefined
-#		assert_raise(UndefinedSpecification) { car = Car2.new("samples/car2_sample.txt") }
-#	end
+	def test_no_spec_model
+		assert_raise(FieldsNotSpecified) do
+			no_spec = NoSpecModel.new("samples/sample.txt")
+		end
+	end
 end
 

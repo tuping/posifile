@@ -35,7 +35,7 @@ class TestValidations < Test::Unit::TestCase
 		assert !BothGapAndOverlap.valid_specification?
 	end
 
-	#especifics -------------
+	# specifics -------------
 	def test_overlap_in_specification_false
 		assert !WithOverlap.overlap_in_specification?([{"name"=>0..8, "address" => 8..20, "job" => 16..30}])
 	end
