@@ -3,10 +3,7 @@ require 'test/unit'
 require 'test_helpers'
 
 class WithGap <Posifile
-	set_specification("name"=>0..10, 
-											"city"=>11..31,
-											"country"=>36..52
-										)
+	set_specification("name"=>0..10, "city"=>11..31, "country"=>36..52)
 end
 
 class WithOverlap < Posifile
@@ -39,19 +36,19 @@ class TestValidations < Test::Unit::TestCase
 	end
 
 	#especifics -------------
-#	def test_overlap_in_specification_false
-#		assert !WithOverlap.overlap_in_specification?
-#	end
+	def test_overlap_in_specification_false
+		assert !WithOverlap.overlap_in_specification?([{"name"=>0..8, "address" => 8..20, "job" => 16..30}])
+	end
 
-#	def test_overlap_in_specification_true
-#		assert Client.overlap_in_specification?
-#	end
-#
-#	def test_gap_in_specification_false
-#		assert !WithGap.gap_in_specification?
-#	end
-#
-#	def test_gap_in_specification_true
-#		assert Client.gap_in_specification?
-#	end
+	def test_overlap_in_specification_true
+		assert Client.overlap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
+	end
+
+	def test_gap_in_specification_false
+		assert !WithGap.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>36..52}])
+	end
+
+	def test_gap_in_specification_true
+		assert Client.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
+	end
 end

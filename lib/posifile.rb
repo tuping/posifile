@@ -63,9 +63,9 @@ class Posifile
 		end
 	end
 
-	def self.overlap_in_specification?(spec_hash)
+	def self.overlap_in_specification?(spec_array)
 		num_ar = []
-		spec_hash.each_with_index do |spec,index|
+		spec_array.each_with_index do |spec,index|
 			spec.each_value do |range|
 				range.each do |item|
 					num_ar[index] ||= []
@@ -83,9 +83,9 @@ class Posifile
 		valid
 	end
 
-	def self.gap_in_specification?(spec_hash)
+	def self.gap_in_specification?(spec_array)
 		num_ar = []
-		spec_hash.each_with_index do |spec, index|
+		spec_array.each_with_index do |spec, index|
 			spec.each_value do |range|
 				range.each do |item|
 					num_ar[index] ||= []
