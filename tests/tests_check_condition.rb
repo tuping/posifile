@@ -1,6 +1,6 @@
 require 'posifile'
 require 'test/unit'
-
+require 'test_helpers'
 
 class Person < Posifile
 	lines_where(0..2, "001") do 
@@ -9,7 +9,13 @@ class Person < Posifile
 end
 
 class TestLinesWhere < Test::Unit::TestCase
-	
+
+	include TestHelpers
+
+	def setup
+		create_one_line_sample
+	end
+
 	def test_check_condition_true
 		c = Person.new("samples/one_line_sample.txt")
 

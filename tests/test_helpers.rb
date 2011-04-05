@@ -37,7 +37,7 @@ module TestHelpers
 		end
 	end
 
-	def create_two_lines_sample
+	def create_multi_lines_sample
 		create_folder
 		unless File.exist?("samples/multi_line_sample.txt")
 			content = <<END

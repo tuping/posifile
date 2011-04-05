@@ -40,11 +40,11 @@ end
 class TestLinesWhere < Test::Unit::TestCase
 	include TestHelpers
 	def setup
-		create_two_lines_sample
+		create_multi_lines_sample
 	end
 
 	def test_lines_where_two_lines_two_specs_1 
-		#with :color as attr_name
+		# with :color as attr_name
 		car = MultiLinesWithTwoSpecs1.new("samples/multi_line_sample.txt")
 
 		assert_equal "vectra", car.white['brand']
@@ -54,7 +54,7 @@ class TestLinesWhere < Test::Unit::TestCase
 	end
 
 	def test_lines_where_two_lines_two_specs_2
-		#with :brand as attr_name
+		# with :brand as attr_name
 		car = MultiLinesWithTwoSpecs2.new("samples/multi_line_sample.txt")
 
 		assert_equal Hash, car.fusca.class
