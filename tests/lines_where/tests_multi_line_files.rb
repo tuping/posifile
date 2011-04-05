@@ -4,7 +4,7 @@ require 'test_helpers'
 
 class MultiLinesWithTwoSpecs1 < Posifile
 
-	# two specifications, for a two-line file
+	# two specifications, for a multi-line file
 	lines_where 0..2, "001" do
 		set_specification( "color"=>13..22,"brand"=>3..12)
 		set_attr_name :color
@@ -17,7 +17,7 @@ end
 
 class MultiLinesWithTwoSpecs2 < Posifile
 
-	# two specifications, for a two-line file
+	# two specifications, for a multi-line file
 	lines_where 0..2, "001" do
 		set_specification( "color"=>13..22,"brand"=>3..12)
 		set_attr_name :brand
@@ -37,10 +37,24 @@ class MultiLinesWithOneSpec < Posifile
 	end
 end
 
+class MultiLinesWithUppercaseFields < Posifile
+
+	# two specifications, for a multi-line file
+	lines_where 0..2, "001" do
+		set_specification( "color"=>13..22,"brand"=>3..12)
+		set_attr_name :brand
+	end
+
+	lines_where 0..2, "002" do
+		set_specification("motos"=>3..12)
+	end
+end
+
 class TestLinesWhere < Test::Unit::TestCase
 	include TestHelpers
 	def setup
 		create_multi_lines_sample
+		create_multi_lines_sample_with_uppercase
 	end
 
 	def test_lines_where_two_lines_two_specs_1 
@@ -59,6 +73,13 @@ class TestLinesWhere < Test::Unit::TestCase
 
 		assert_equal Hash, car.fusca.class
 		assert_equal "bege",car.fusca['color']
+	end
+
+	def test_lines_where_with_uppercase_fields
+		car = MultiLinesWithUppercaseFields.new("samples/multi_line_sample_with_uppercase.txt")
+		
+		assert_equal "bege", car.fusca['color']
+		assert_equal "Yellow", car.uno['color']
 	end
 
 #	def test_lines_where_two_lines_one_spec_yellow

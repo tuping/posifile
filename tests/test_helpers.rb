@@ -53,5 +53,20 @@ END
 		end
 	end
 
+	def create_multi_lines_sample_with_uppercase
+		create_folder
+		unless File.exist?("samples/multi_line_sample_with_uppercase.txt")
+			content = <<END
+001Uno       Yellow    
+002yamaha    BLUE      
+001Vectra    white     
+002harley    black     
+001FUSCA     bege      
+END
+			sample = File.new("samples/multi_line_sample_with_uppercase.txt","wb")
+			sample.puts content
+			sample.close
+		end
+	end
 
 end
