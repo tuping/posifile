@@ -10,6 +10,9 @@ class OneLineWithOneSpec < Posifile
 	end
 end
 
+class OneLineWithOneSpecWithUppercase < Posifile
+end
+
 class TestLinesWhere < Test::Unit::TestCase
 	include TestHelpers
 	def setup
@@ -19,6 +22,14 @@ class TestLinesWhere < Test::Unit::TestCase
 	def test_lines_where_one_line_one_spec
 		car = OneLineWithOneSpec.new("samples/one_line_sample.txt")
 		assert_equal "yellow", car.color
+	end
+
+	def test_lines_where_one_line_one_spec_with_uppercase
+		assert_raise(UppercaseFieldsError) do 
+			OneLineWithOneSpecWithUppercase.lines_where 0..2, "001" do
+				OneLineWithOneSpecWithUppercase.set_specification("Color"=>3..12)
+			end
+		end
 	end
 
 end
