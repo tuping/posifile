@@ -75,7 +75,7 @@ Notice that in multi-lin files, the method's names will always be the downcased 
 To list every attribute created for your object, do:
 	client.pos_attributes # => ['boxter', 'golf', 'vivasix']
 
-=== feedback
+=== Feedback
 
 Email: marcofognog@gmail.com
 Any ideas on how we can make this better will be appreciated.
