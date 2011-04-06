@@ -3,6 +3,10 @@
 This library is intended to make it easier to read/write any kind of position file.
 All you have to do is write in the model how each position will be associated to each objects attributes.
 
+=== Instalation
+
+	gem install posifile
+
 === Usage
 
 The most difficult thing to do is figure out how the file is laid out. Once you can 'see' the fields, using this library is easy.
@@ -67,6 +71,9 @@ We would do:
 	cliennt.golf['color'] # => 'red'
 
 Notice that in multi-lin files, the method's names will always be the downcased version of the value found in the given position.
+
+To list every attribute created for your object, do:
+	client.pos_attributes # => ['boxter', 'golf', 'vivasix']
 
 === feedback
 
