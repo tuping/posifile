@@ -1,5 +1,8 @@
 require 'errors'
 class Posifile
+
+	INVALID_CHARS = " !@#$\%*()-\&\'\"<>.,;:[]{}\'\`^+\\/"
+
 	@@specifications = {}
 	@@conditions = {}
 	@@attr_names = {}
@@ -51,7 +54,7 @@ class Posifile
 				unless letter.downcase == letter
 					check = false
 				end
-				if " !@#$\%*()-\'\"<>.,;:[]{}\'\`^+\\/".split("").include?(letter)
+				if INVALID_CHARS.split("").include?(letter)
 					check = false
 				end
 			end
@@ -191,6 +194,15 @@ class Posifile
 		end
 	end
 
+	# Once the name is gonna be used as method name, 
+	# this changes the name when it contains invalid characters. 
+	def change_name(original)
+		INVALID_CHARS.split('').each do |char|
+			original.gsub!(char,'')
+		end
+		original.downcase
+	end
+
 	def build_attributes_from_hash(specification_hash,line,attr_name)
 
 		unless attr_name.nil?
@@ -198,7 +210,9 @@ class Posifile
 			specification_hash.each do |key, value|
 				values_hash[key] = field_value(key, specification_hash, line )
 			end
-			method_name = field_value(attr_name,specification_hash,line).downcase
+
+			method_name = change_name(field_value(attr_name,specification_hash,line))
+
 			add_method_to_pos_attr(method_name)
 			self.instance_eval "
 				def #{method_name}\n
