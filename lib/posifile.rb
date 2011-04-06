@@ -197,6 +197,7 @@ class Posifile
 	# Once the name is gonna be used as method name, 
 	# this changes the name when it contains invalid characters. 
 	def change_name(original)
+		original.gsub!(' ','_')
 		INVALID_CHARS.split('').each do |char|
 			original.gsub!(char,'')
 		end
