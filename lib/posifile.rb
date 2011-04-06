@@ -48,7 +48,7 @@ class Posifile
 		check = false
 		hash.each_key do |key|
 			key.split('').each do |letter|
-				if letter.upcase ==letter
+				unless letter.downcase == letter
 					check = true
 				end
 			end
