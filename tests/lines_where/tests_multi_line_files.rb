@@ -2,34 +2,6 @@ require 'posifile'
 require 'test/unit'
 require 'test_helpers'
 
-class MultiLinesWithTwoSpecs1 < Posifile
-
-	# two specifications, for a multi-line file
-	lines_where 0..2, "001" do
-		set_specification( "color"=>13..22,"brand"=>3..12)
-		set_attr_name :color
-	end
-
-	lines_where 0..2, "002" do
-		set_specification("brand"=>3..12)
-		set_attr_name :brand
-	end
-end
-
-class MultiLinesWithTwoSpecs2 < Posifile
-
-	# two specifications, for a multi-line file
-	lines_where 0..2, "001" do
-		set_specification( "color"=>13..22,"brand"=>3..12)
-		set_attr_name :brand
-	end
-
-	lines_where 0..2, "002" do
-		set_specification("brand"=>3..12)
-		set_attr_name :brand
-	end
-end
-
 class MultiLinesWithTwoSpecsWithOneSetAttrNameMissing1 < Posifile
 	# two specifications, for a multi-line file, but one them doesn't have the set_attr_name. It should behave like in the one-line file.
 	lines_where 0..2, "001" do
@@ -44,7 +16,7 @@ end
 
 class MultiLinesWithTwoSpecsWithOneSetAttrNameMissing2 < Posifile
 	# one specifications, for a multi-line file, but doesn't have the set_attr_name. It should behave like in the one-line file.
-	lines_where 0..2, "001" do
+	lines_where(0..2, "001") do
 		set_specification( "color"=>13..22,"brand"=>3..12)
 	end
 end
@@ -75,6 +47,21 @@ class NoSpecModel < Posifile
 	end
 end
 
+
+
+class MultiLinesWithTwoSpecsWithOneSetAttrNameMissing3 < Posifile
+	# this is excatly the same as MultiLinesWithTwoSpecsWithOneSetAttrNameMissing1 but in different order. And with different attr's
+	lines_where(0..2, "001") do
+		set_specification("brand"=>3..12, "color"=>13..22)
+	end	
+
+	lines_where 0..2, "002" do
+		set_specification( "color1"=>13..22,"brand1"=>3..12)
+		set_attr_name :brand1
+	end
+end
+
+
 class TestLinesWhere < Test::Unit::TestCase
 
 	include TestHelpers
@@ -82,25 +69,6 @@ class TestLinesWhere < Test::Unit::TestCase
 	def setup
 		create_multi_lines_sample
 		create_multi_lines_sample_with_uppercase
-	end
-
-	def test_lines_where_two_lines_two_specs_1 
-		# with :color as attr_name
-		car = MultiLinesWithTwoSpecs1.new("samples/multi_line_sample.txt")
-
-		assert_equal "vectra", car.white['brand']
-		assert_equal "uno", car.yellow['brand']
-		assert_equal "white", car.white['color']
-		assert_equal "yamaha", car.yamaha["brand"]
-
-	end
-
-	def test_lines_where_two_lines_two_specs_2
-		# with :brand as attr_name
-		car = MultiLinesWithTwoSpecs2.new("samples/multi_line_sample.txt")
-
-		assert_equal Hash, car.fusca.class
-		assert_equal "bege",car.fusca['color']
 	end
 
 	def test_lines_where_with_uppercase_fields
@@ -115,12 +83,12 @@ class TestLinesWhere < Test::Unit::TestCase
 		assert_equal "fusca", car.fusca["brand"]
 	end
 
-	def test_raise_error_attr_name_not_specified
+	def test_attr_name_not_specified
 			car = MultiLinesWithTwoSpecsWithOneSetAttrNameMissing1.new("samples/multi_line_sample.txt")
 			assert_equal String, car.color.class
 	end
 
-	def test_raise_error_attr_name_not_specified2
+	def test_attr_name_not_specified2
 			car = MultiLinesWithTwoSpecsWithOneSetAttrNameMissing2.new("samples/multi_line_sample.txt")
 			assert_equal String, car.brand.class
 	end
@@ -129,6 +97,11 @@ class TestLinesWhere < Test::Unit::TestCase
 		assert_raise(FieldsNotSpecified) do
 			no_spec = NoSpecModel.new("samples/sample.txt")
 		end
+	end
+
+	def test_attr_name_not_specified3
+			car = MultiLinesWithTwoSpecsWithOneSetAttrNameMissing3.new("samples/multi_line_sample.txt")
+			assert_equal String, car.color.class
 	end
 
 end
