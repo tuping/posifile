@@ -18,11 +18,8 @@ This is the case where there is only one line per file, and each file constains 
 	require 'posifile'
 
 	class Client < Posifile 
-		set_specification{
-												"name"="0..10", 
-												"city"=>"11..31",
-												"country"=>"32..50"
-											}
+		set_specification("name"="0..10", "city"=>"11..31", "country"=>"32..50")
+
 		#you can put here any other method you'd like
 
 	end
