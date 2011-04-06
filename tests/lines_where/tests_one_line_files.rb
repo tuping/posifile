@@ -25,7 +25,7 @@ class TestLinesWhere < Test::Unit::TestCase
 	end
 
 	def test_lines_where_one_line_one_spec_with_uppercase
-		assert_raise(UppercaseFieldsError) do 
+		assert_raise(InvalidFieldName) do 
 			OneLineWithOneSpecWithUppercase.lines_where 0..2, "001" do
 				OneLineWithOneSpecWithUppercase.set_specification("Color"=>3..12)
 			end

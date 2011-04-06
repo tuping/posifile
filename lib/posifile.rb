@@ -24,11 +24,11 @@ class Posifile
 	end
 
 	def self.set_specification(hash)
-		unless check_for_uppercase(hash)
+		if valid_names?(hash)
 			@@specifications[self] ||= []
 			@@specifications[self] << hash
 		else
-			raise UppercaseFieldsError, "Fields names must be all downcase letters"
+			raise InvalidFieldName, "Fields names contain invalid characteres for method names."
 		end
 	end
 
@@ -44,15 +44,15 @@ class Posifile
 		@@attr_names[self] << attr_name
 	end
 
-	def self.check_for_uppercase(hash)
-		check = false
+	def self.valid_names?(hash)
+		check = true
 		hash.each_key do |key|
 			key.split('').each do |letter|
 				unless letter.downcase == letter
-					check = true
+					check = false
 				end
-				if letter == ' ' && '-'
-					raise InvalidFieldName, "Some of the specified fields have invalid characters."
+				if " !@#$\%*()-\'\"<>.,;:[]{}\'\`^+\\/".split("").include?(letter)
+					check = false
 				end
 			end
 		end
