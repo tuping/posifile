@@ -51,6 +51,9 @@ class Posifile
 				unless letter.downcase == letter
 					check = true
 				end
+				if letter == ' ' && '-'
+					raise InvalidFieldName, "Some of the specified fields have invalid characters."
+				end
 			end
 		end
 

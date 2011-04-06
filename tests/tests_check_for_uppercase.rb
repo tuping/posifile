@@ -24,7 +24,9 @@ class TestsCheckForUppercase < Test::Unit::TestCase
 		assert !UppercasedSpec.check_for_uppercase("nome_do_arquivo"=>2..14,"codigo_de_origem"=>15..22,"data_de_geracao_do_arquivo"=>23..30)
 	end
 
-#	def tests_check_for_uppercase_false2
-#		assert !UppercasedSpec.check_for_uppercase("nome do arquivo"=>2..14,"codigo"=>15..22,"data"=>23..30)
-#	end
+	def tests_check_for_uppercase_false2
+		assert_raise(InvalidFieldName) do
+			UppercasedSpec.check_for_uppercase("nome do arquivo"=>2..14,"codigo"=>15..22,"data"=>23..30)
+		end
+	end
 end
