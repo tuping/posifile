@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name = 'posifile'
-	s.version = '0.2.0'
+	s.version = '0.2.1'
 	s.summary = 'Inteds to make easier to read position files.'
 	s.description = 'Inteds to make easier to read position files. Still very imature.'
 	s.files = `git ls-files`.split("\n")
