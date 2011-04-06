@@ -18,7 +18,7 @@ class Posifile
 			if file_content.length == 1
 				build_attributes_from_hash(@@specifications[self.class][0], line, nil)
 			else
-				check_attr_names
+				#check_attr_names
 				specification_index(line) do |line_,index|
 					build_attributes_from_hash(@@specifications[self.class][index], line_,@@attr_names[self.class][index])
 				end
@@ -27,6 +27,7 @@ class Posifile
 	end
 
 	def self.set_specification(hash)
+		@@attr_names[self] ||= []
 		if valid_names?(hash)
 			@@specifications[self] ||= []
 			@@specifications[self] << hash
@@ -36,7 +37,6 @@ class Posifile
 	end
 
 	def self.lines_where(range,value,&block)
-
 		@@conditions[self] ||= []
 		@@conditions[self] << {range,value}
 		yield
@@ -205,7 +205,6 @@ class Posifile
 	end
 
 	def build_attributes_from_hash(specification_hash,line,attr_name)
-
 		unless attr_name.nil?
 			values_hash = {}
 			specification_hash.each do |key, value|

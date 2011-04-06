@@ -31,7 +31,7 @@ class MultiLinesWithTwoSpecs2 < Posifile
 end
 
 class MultiLinesWithTwoSpecsWithOneSetAttrNameMissing1 < Posifile
-	# two specifications, for a multi-line file, but one them doesn't have the set_attr_name, wich is obligatory
+	# two specifications, for a multi-line file, but one them doesn't have the set_attr_name. It should behave like in the one-line file.
 	lines_where 0..2, "001" do
 		set_specification( "color"=>13..22,"brand"=>3..12)
 		set_attr_name :brand
@@ -43,7 +43,7 @@ class MultiLinesWithTwoSpecsWithOneSetAttrNameMissing1 < Posifile
 end
 
 class MultiLinesWithTwoSpecsWithOneSetAttrNameMissing2 < Posifile
-	# one specifications, for a multi-line file, but doesn't have the set_attr_name, wich is obligatory
+	# one specifications, for a multi-line file, but doesn't have the set_attr_name. It should behave like in the one-line file.
 	lines_where 0..2, "001" do
 		set_specification( "color"=>13..22,"brand"=>3..12)
 	end
@@ -116,15 +116,13 @@ class TestLinesWhere < Test::Unit::TestCase
 	end
 
 	def test_raise_error_attr_name_not_specified
-		assert_raise(AttrNameNotSpecified) do
 			car = MultiLinesWithTwoSpecsWithOneSetAttrNameMissing1.new("samples/multi_line_sample.txt")
-		end
+			assert_equal String, car.color.class
 	end
 
 	def test_raise_error_attr_name_not_specified2
-		assert_raise(AttrNameNotSpecified) do
 			car = MultiLinesWithTwoSpecsWithOneSetAttrNameMissing2.new("samples/multi_line_sample.txt")
-		end
+			assert_equal String, car.brand.class
 	end
 
 	def test_no_spec_model
