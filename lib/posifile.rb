@@ -37,9 +37,15 @@ class Posifile
 	end
 
 	def self.lines_where(range,value,&block)
+		@@attr_names[self] ||= []
+		length_before = @@attr_names[self].length
 		@@conditions[self] ||= []
 		@@conditions[self] << {range,value}
 		yield
+		length_after = @@attr_names[self].length
+		if length_before == length_after
+			@@attr_names[self] << nil
+		end
 	end
 
 	def self.set_attr_name(attr_name)
