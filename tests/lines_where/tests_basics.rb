@@ -30,6 +30,17 @@ class MultiLinesWithTwoSpecs2 < Posifile
 	end
 end
 
+
+class MultiLinesWithOneSpec < Posifile
+
+	# just one specification, for a two-line file, should raise exception on initialize
+	# but it doesn't do that yet, and dont have tests for this, but seems to work.
+	lines_where 0..2, "001" do
+		set_specification("brand"=>3..12)
+		set_attr_name :brand
+	end
+end
+
 class TestBasics < Test::Unit::TestCase
 
 	include TestHelpers
@@ -56,4 +67,10 @@ class TestBasics < Test::Unit::TestCase
 		assert_equal Hash, car.fusca.class
 		assert_equal "bege",car.fusca['color']
 	end
+
+	def test_lines_where_two_lines_one_spec
+		car = MultiLinesWithOneSpec.new("samples/multi_line_sample.txt")
+		assert_equal "fusca", car.fusca["brand"]
+	end
+
 end
