@@ -73,7 +73,7 @@ class Posifile
 	end
 
 	def self.valid_specification?
-		unless gap_in_specification?(@@specifications[self]) && overlap_in_specification?(@@specifications[self])
+		if gap_in_specification?(@@specifications[self]) || overlap_in_specification?(@@specifications[self])
 			false
 		else
 			true
@@ -91,10 +91,10 @@ class Posifile
 				end
 			end
 		end
-		valid = true
+		valid = false
 		num_ar.each do |array|
 			if array.include?(2)
-				valid = false
+				valid = true
 			end
 		end
 		valid
@@ -111,10 +111,10 @@ class Posifile
 				end
 			end
 		end
-		valid = true
+		valid = false
 		num_ar.each do |array|
 			if array.include? nil
-				valid = false
+				valid = true
 			end
 		end
 		valid

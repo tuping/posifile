@@ -37,18 +37,18 @@ class TestValidations < Test::Unit::TestCase
 
 	# specifics -------------
 	def test_overlap_in_specification_false
-		assert !WithOverlap.overlap_in_specification?([{"name"=>0..8, "address" => 8..20, "job" => 16..30}])
+		assert WithOverlap.overlap_in_specification?([{"name"=>0..8, "address" => 8..20, "job" => 16..30}])
 	end
 
 	def test_overlap_in_specification_true
-		assert Client.overlap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
+		assert !Client.overlap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
 	end
 
 	def test_gap_in_specification_false
-		assert !WithGap.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>36..52}])
+		assert WithGap.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>36..52}])
 	end
 
 	def test_gap_in_specification_true
-		assert Client.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
+		assert !Client.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
 	end
 end
