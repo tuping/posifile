@@ -57,10 +57,10 @@ class TestValidations < Test::Unit::TestCase
 	end
 
 	def test_valid_class1
-		assert ValidClass.gap_in_specification?(["name"=>0..8, "address" => 10..20, "job" => 16..30, "number"=>31..31])
+		assert !ValidClass.gap_in_specification?([{"name"=>0..10, "address" => 11..20, "job" => 20..30,"number"=>31..31}])
 	end
 
 	def test_valid_class2
-		assert ValidClass.overlap_in_specification?(["name"=>0..8, "address" => 10..20, "job" => 16..30, "number"=>31..31])
+		assert !ValidClass.gap_in_specification?([{"name"=>0..10, "address" => 11..20, "job" => 20..30,"number"=>31..31}])
 	end
 end
