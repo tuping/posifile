@@ -161,9 +161,9 @@ class Posifile
 	def file_content
 		if raw_content.nil?
 			file = File.open(@data_file,"r")
-			raw_content = file.readlines
+			@raw_content = file.readlines
 		end
-		raw_content
+		@raw_content
 	end
 
 	def field_value(field_name,specification_hash,line)
