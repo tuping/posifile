@@ -73,4 +73,9 @@ class TestBasics < Test::Unit::TestCase
 		assert_equal "fusca", car.fusca["brand"]
 	end
 
+	def test_section_code
+		car = MultiLinesWithTwoSpecs1.new("samples/multi_line_sample.txt")
+		assert_equal "001", car.white["section_code"]
+	end
+
 end
