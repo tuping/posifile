@@ -176,11 +176,16 @@ class Posifile
 		end
 		content_ar = line.split('')
 		value_str = ''
-		range = specification_hash[field_name]
-		range.each do |n|
-				value_str.concat content_ar[n]
+		if !specification_hash.keys.include? field_name 
+			raise InvalidAttrName, "The specified attr name was not found in the specification hash."
+		else
+			range = specification_hash[field_name]
+
+			range.each do |n|
+					value_str.concat content_ar[n]
+			end
+			value_parse value_str
 		end
-		value_parse value_str
 	end
 
 	# get the value ignoring white spaces in th end of the string.
