@@ -15,6 +15,10 @@ class BothGapAndOverlap < Posifile
 	set_specification("name"=>0..8, "address" => 10..20, "job" => 16..30)
 end
 
+class ValidClass < Posifile
+	set_specification("name"=>0..8, "address" => 10..20, "job" => 16..30, "number"=>31..31)
+end
+
 class TestValidations < Test::Unit::TestCase
 
 	include TestHelpers
@@ -50,5 +54,13 @@ class TestValidations < Test::Unit::TestCase
 
 	def test_gap_in_specification_true
 		assert !Client.gap_in_specification?([{"name"=>0..10, "city"=>11..31,"country"=>32..42}])
+	end
+
+	def test_valid_class1
+		assert ValidClass.gap_in_specification?(["name"=>0..8, "address" => 10..20, "job" => 16..30, "number"=>31..31])
+	end
+
+	def test_valid_class2
+		assert ValidClass.overlap_in_specification?(["name"=>0..8, "address" => 10..20, "job" => 16..30, "number"=>31..31])
 	end
 end
