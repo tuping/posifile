@@ -1,8 +1,8 @@
 Gem::Specification.new do |s|
 	s.name = 'posifile'
 	s.version = '0.2.1'
-	s.summary = 'Inteds to make easier to read position files.'
-	s.description = 'Inteds to make easier to read position files. Still very imature.'
+	s.summary = 'Ruby library to make it easier to read position files.'
+	s.description = 'Ruby library to make it easier to read position files.'
 	s.files = `git ls-files`.split("\n")
 	s.homepage = 'http://github.com/marcofognog/posifile'
   s.platform = Gem::Platform::RUBY
