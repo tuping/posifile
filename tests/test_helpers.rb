@@ -46,7 +46,7 @@ module TestHelpers
 001vectra    white     
 002harley    black     
 001fusca     bege      
-003berlineta rosa
+003berlineta rosa      
 END
 			sample = File.new("samples/multi_line_sample.txt","wb")
 			sample.puts content

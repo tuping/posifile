@@ -171,7 +171,7 @@ class Posifile
 	end
 
 	def field_value(field_name,specification_hash,line)
-		if field_name.class ==Symbol
+		if field_name.class == Symbol
 			field_name = field_name.to_s
 		end
 		content_ar = line.split('')
