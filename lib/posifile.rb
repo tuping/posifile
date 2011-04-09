@@ -8,7 +8,7 @@ class Posifile
 	@@attr_names = {}
 	@@pos_attr = {}
 
-	attr_accessor :data_file
+	attr_accessor :data_file, :raw_content
 
 	def initialize(data_file_name)
 		@data_file = data_file_name
@@ -159,8 +159,11 @@ class Posifile
 	end
 
 	def file_content
-		file = File.open(@data_file,"r")
-		file.readlines
+		if raw_content.nil?
+			file = File.open(@data_file,"r")
+			raw_content = file.readlines
+		end
+		raw_content
 	end
 
 	def field_value(field_name,specification_hash,line)
@@ -173,7 +176,6 @@ class Posifile
 			raise InvalidAttrName, "The specified attr name was not found in the specification hash."
 		else
 			range = specification_hash[field_name]
-
 			range.each do |n|
 					value_str.concat content_ar[n]
 			end
@@ -181,7 +183,7 @@ class Posifile
 		end
 	end
 
-	# get the value ignoring white spaces in th end of the string.
+	# get the value ignoring white spaces in the end of the string.
 	def value_parse(value_string)
 		ar = value_string.split(' ')
 		ar.join(' ')
