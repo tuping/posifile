@@ -23,6 +23,10 @@ class TestPosAttributes < Test::Unit::TestCase
 
 	include TestHelpers
 
+	def setup
+		create_sample_file
+	end
+
 	def test_pos_attributes_one_line
 		c = Client.new("samples/sample.txt")
 		assert c.pos_attributes.include? "city"

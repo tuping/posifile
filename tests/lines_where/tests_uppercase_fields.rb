@@ -11,7 +11,7 @@ class MultiLinesWithUppercaseFields < Posifile
 	end
 end
 
-class TestLinesWhere < Test::Unit::TestCase
+class TestUppercaseFields < Test::Unit::TestCase
 
 	include TestHelpers
 
