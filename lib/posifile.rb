@@ -46,6 +46,10 @@ class Posifile
 		if length_before == length_after
 			@@attr_names[self] << nil
 		end
+		section_code_hash = {"section_code"=>range}
+		if @@specifications[self]
+			@@specifications[self].last.merge!(section_code_hash)
+		end
 	end
 
 	def self.set_attr_name(attr_name)
@@ -99,6 +103,7 @@ class Posifile
 
 	def self.gap_in_specification?(spec_array)
 		num_ar = []
+		puts spec_array.inspect
 		spec_array.each_with_index do |spec, index|
 			spec.each_value do |range|
 				range.each do |item|
