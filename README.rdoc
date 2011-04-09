@@ -34,7 +34,7 @@ And you will get as object attributes every key you specified in the above hash:
 Note that every key in the hash needs to be all downcase, because they'r gonna be method's names.
 
 ==== Multi-line file 
-When the file you need to read has many sections and many registers in only one file, you can use some code (generally specified in some kind of document layout) to be able to tell to wich section some register belongs to. Here this code is in first three positions of the file.
+When the file you need to read has many sections and many registers in only one file, you can use some code (generally specified in some kind of document layout, and known as "section code") to be able to tell to wich section some register belongs to. Here this code is in first three positions of the file.
 
 	# car
 	require 'rubygems'
@@ -68,9 +68,15 @@ We would do:
 	cliennt.golf['color'] # => 'red'
 
 Notice that in multi-lin files, the method's names will always be the downcased version of the value found in the given position.
+Whenever set_attr_name is not specified, the method creation rules will be the same as in a one-line file.
 
 To list every attribute created for your object, do:
 	client.pos_attributes # => ['boxter', 'golf', 'vivasix']
+
+The code used to identify between the two specifications (in the example above they are 001 and 002) are called "section code", and is automatically included in tha specification hash, so if you need it:
+
+	client.boxter['section_code']
+
 
 === Feedback
 
