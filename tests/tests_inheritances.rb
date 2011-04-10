@@ -14,7 +14,7 @@ class TestInheritance < Test::Unit::TestCase
 
 	def test_inheritance_one
 		car = MyClass.new("samples/sample.txt")
-		assert true
+		assert_equal "jose", car.name
 	end
 
 
