@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
 	s.name = 'posifile'
-	s.version = '0.2.2'
+	s.version = '0.2.3'
 	s.summary = 'Ruby library to make it easier to read position files. '
 	s.description = 'Ruby library to make it easier to read position files.'
 	s.files = `git ls-files`.split("\n")
