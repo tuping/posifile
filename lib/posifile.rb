@@ -16,44 +16,44 @@ class Posifile
 		check_specification_hash
 		file_content.each do |line|
 			if file_content.length == 1
-				build_attributes_from_hash(@@specifications[self.class][0], line, nil)
+				build_attributes_from_hash(@@specifications[class_name][0], line, nil)
 			else
 				specification_index(line) do |line_,index|
-					build_attributes_from_hash(@@specifications[self.class][index], line_,@@attr_names[self.class][index])
+					build_attributes_from_hash(@@specifications[class_name][index], line_,@@attr_names[class_name][index])
 				end
 			end
 		end
 	end
 
 	def self.set_specification(hash)
-		@@attr_names[self] ||= []
+		@@attr_names[class_name] ||= []
 		if valid_names?(hash)
-			@@specifications[self] ||= []
-			@@specifications[self] << hash
+			@@specifications[class_name] ||= []
+			@@specifications[class_name] << hash
 		else
 			raise InvalidFieldName, "Fields names contain invalid characteres for method names."
 		end
 	end
 
 	def self.lines_where(range,value,&block)
-		@@attr_names[self] ||= []
-		length_before = @@attr_names[self].length
-		@@conditions[self] ||= []
-		@@conditions[self] << {range,value}
+		@@attr_names[class_name] ||= []
+		length_before = @@attr_names[class_name].length
+		@@conditions[class_name] ||= []
+		@@conditions[class_name] << {range,value}
 		yield
-		length_after = @@attr_names[self].length
+		length_after = @@attr_names[class_name].length
 		if length_before == length_after
-			@@attr_names[self] << nil
+			@@attr_names[class_name] << nil
 		end
 		section_code_hash = {"section_code"=>range}
-		if @@specifications[self]
-			@@specifications[self].last.merge!(section_code_hash)
+		if @@specifications[class_name]
+			@@specifications[class_name].last.merge!(section_code_hash)
 		end
 	end
 
 	def self.set_attr_name(attr_name)
-		@@attr_names[self] ||= []
-		@@attr_names[self] << attr_name
+		@@attr_names[class_name] ||= []
+		@@attr_names[class_name] << attr_name
 	end
 
 	def self.valid_names?(hash)
@@ -73,7 +73,7 @@ class Posifile
 	end
 
 	def self.valid_specification?
-		if gap_in_specification?(@@specifications[self]) || overlap_in_specification?(@@specifications[self])
+		if gap_in_specification?(@@specifications[class_name]) || overlap_in_specification?(@@specifications[class_name])
 			false
 		else
 			true
@@ -122,7 +122,7 @@ class Posifile
 
 	def self.higher
 		higher_number = 0
-		@@specifications[self][0].each_value do |range|
+		@@specifications[class_name][0].each_value do |range|
 			if range.max > higher_number
 					higher_number = range.max
 			end
@@ -130,16 +130,24 @@ class Posifile
 		higher_number
 	end
 
+	def self.class_name
+		self
+	end
+
+	def class_name
+		self.class
+	end
+
 	def check_specification_hash
-		if @@specifications[self.class].nil?
+		if @@specifications[class_name].nil?
 			raise FieldsNotSpecified, "You should call set_specifications in you model, so we can build the object with the corresponding attribuites. Check documentation on how to do so."
 		end
 	end
 
 	def specification_index(line)
 		i = 0
-		unless @@conditions[self.class].nil?
-			@@conditions[self.class].each_with_index do |hash, num|
+		unless @@conditions[class_name].nil?
+			@@conditions[class_name].each_with_index do |hash, num|
 				if check_condition(hash,line)
 					yield line, num
 				end
@@ -190,13 +198,13 @@ class Posifile
 	end
 
 	def pos_attributes
-		@@pos_attr[self.class]
+		@@pos_attr[class_name]
 	end
 
 	def add_method_to_pos_attr(field)
-		@@pos_attr[self.class] ||= []
-		unless @@pos_attr[self.class].include? field
-			@@pos_attr[self.class] << field
+		@@pos_attr[class_name] ||= []
+		unless @@pos_attr[class_name].include? field
+			@@pos_attr[class_name] << field
 		end
 	end
 
