@@ -131,11 +131,19 @@ class Posifile
 	end
 
 	def self.class_name
-		self
+		if superclass == Posifile
+			self
+		else
+			superclass
+		end
 	end
 
 	def class_name
-		self.class
+		if self.class.superclass == Posifile
+			self.class
+		else
+			self.class.superclass
+		end
 	end
 
 	def check_specification_hash
