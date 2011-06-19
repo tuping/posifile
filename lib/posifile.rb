@@ -26,7 +26,6 @@ class Posifile
 	end
 
 	def self.set_specification(hash)
-		@@attr_names[class_name] ||= []
 		if valid_names?(hash)
 			@@specifications[class_name] ||= []
 			@@specifications[class_name] << hash
@@ -35,7 +34,7 @@ class Posifile
 		end
 	end
 
-	def self.lines_where(range,value,&block)
+	def self.lines_where(range,value, &block)
 		@@attr_names[class_name] ||= []
 		length_before = @@attr_names[class_name].length
 		@@conditions[class_name] ||= []
@@ -69,15 +68,11 @@ class Posifile
 			end
 		end
 
-		return check
+		check
 	end
 
 	def self.valid_specification?
-		if gap_in_specification?(@@specifications[class_name]) || overlap_in_specification?(@@specifications[class_name])
-			false
-		else
-			true
-		end
+		not gap_in_specification?(@@specifications[class_name]) || overlap_in_specification?(@@specifications[class_name])
 	end
 
 	def self.overlap_in_specification?(spec_array)
@@ -137,7 +132,6 @@ class Posifile
 		end
 	
 		name
-
 	end
 
 	def class_name
@@ -157,7 +151,7 @@ class Posifile
 
 	def specification_index(line)
 		i = 0
-		unless @@conditions[class_name].nil?
+		if @@conditions[class_name]
 			@@conditions[class_name].each_with_index do |hash, num|
 				if check_condition(hash,line)
 					yield line, num
@@ -167,25 +161,20 @@ class Posifile
 		i
 	end
 
-	def check_condition(condition_hash, checked_line)
-			check = false
-			condition_hash.each do |range, value|
-				if checked_line[range] == value
-					check = true
-				end
-			end
-			check
+	# Checks if a given line matches the line_where condition declare in the class
+	def check_condition(condition_hash, line)
+			line[condition_hash.keys.first] == condition_hash.values.first
 	end
 
 	def file_content
 		if raw_content.nil?
-			file = File.open(@data_file,"r")
+			file = File.open(@data_file, "r")
 			@raw_content = file.readlines
 		end
 		@raw_content
 	end
 
-	def field_value(field_name,specification_hash,line)
+	def field_value(field_name, specification_hash, line)
 		if field_name.class == Symbol
 			field_name = field_name.to_s
 		end
@@ -229,8 +218,8 @@ class Posifile
 		original.downcase
 	end
 
-	def build_attributes_from_hash(specification_hash,line,attr_name)
-		unless attr_name.nil?
+	def build_attributes_from_hash(specification_hash, line, attr_name)
+		if attr_name
 			values_hash = {}
 			specification_hash.each do |key, value|
 				values_hash[key] = field_value(key, specification_hash, line )
@@ -246,12 +235,12 @@ class Posifile
 			"
 		else
 			specification_hash.each do |key, not_used|
-					add_method_to_pos_attr(key)
-					self.instance_eval "
-						def #{key}
-							\"#{field_value(key, specification_hash, line)}\"
-						end
-					"
+				add_method_to_pos_attr(key)
+				self.instance_eval "
+					def #{key}
+						\"#{field_value(key, specification_hash, line)}\"
+					end
+				"
 			end
 		end
 	end
