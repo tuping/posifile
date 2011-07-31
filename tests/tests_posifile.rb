@@ -34,11 +34,6 @@ class TestPosifile < Test::Unit::TestCase
 		assert_equal "New Orleans", client2.city
 	end
 
-	def test_value_parse
-		c = Client.new("samples/sample.txt")
-		assert_equal "esta frase precisa estar completa !", c.value_parse("esta frase precisa estar completa !                 ")
-	end
-
 	def test_field_value
 		c = Client.new("samples/sample.txt")
 		assert_equal "jose", c.field_value("name",{"name"=>0..10, "city"=>11..31, "country"=>32..42}, "jose       new york             brazil    ")

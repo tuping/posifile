@@ -18,8 +18,8 @@ class Posifile
       if file_content.length == 1
         build_attributes_from_hash(@@specifications[class_name][0], line, nil)
       else
-        specification_index(line) do |line_,index|
-          build_attributes_from_hash(@@specifications[class_name][index], line_,@@attr_names[class_name][index])
+        specification_index(line) do |line_, index|
+          build_attributes_from_hash(@@specifications[class_name][index], line_, @@attr_names[class_name][index])
         end
       end
     end
@@ -38,13 +38,13 @@ class Posifile
     @@attr_names[class_name] ||= []
     length_before = @@attr_names[class_name].length
     @@conditions[class_name] ||= []
-    @@conditions[class_name] << {range,value}
+    @@conditions[class_name] << { range, value }
     yield
     length_after = @@attr_names[class_name].length
     if length_before == length_after
       @@attr_names[class_name] << nil
     end
-    section_code_hash = {"section_code"=>range}
+    section_code_hash = { "section_code" => range }
     if @@specifications[class_name]
       @@specifications[class_name].last.merge!(section_code_hash)
     end
@@ -77,7 +77,7 @@ class Posifile
 
   def self.overlap_in_specification?(spec_array)
     num_ar = []
-    spec_array.each_with_index do |spec,index|
+    spec_array.each_with_index do |spec, index|
       spec.each_value do |range|
         range.each do |item|
           num_ar[index] ||= []
@@ -163,7 +163,7 @@ class Posifile
 
   # Checks if a given line matches the line_where condition declare in the class
   def check_condition(condition_hash, line)
-      line[condition_hash.keys.first] == condition_hash.values.first
+    line[condition_hash.keys.first] == condition_hash.values.first
   end
 
   def file_content
@@ -174,10 +174,9 @@ class Posifile
     @raw_content
   end
 
+  # Get the value of a specifc position declared in the specification hash
   def field_value(field_name, specification_hash, line)
-    if field_name.class == Symbol
-      field_name = field_name.to_s
-    end
+    field_name = field_name.to_s
     content_ar = line.split('')
     value_str = ''
     if !specification_hash.keys.include? field_name 
@@ -185,16 +184,10 @@ class Posifile
     else
       range = specification_hash[field_name]
       range.each do |n|
-          value_str.concat content_ar[n]
+        value_str.concat content_ar[n]
       end
-      value_parse value_str
+      value_str.strip
     end
-  end
-
-  # get the value ignoring white spaces in the end of the string.
-  def value_parse(value_string)
-    ar = value_string.split(' ')
-    ar.join(' ')
   end
 
   def pos_attributes
@@ -221,11 +214,11 @@ class Posifile
   def build_attributes_from_hash(specification_hash, line, attr_name)
     if attr_name
       values_hash = {}
-      specification_hash.each do |key, value|
+      specification_hash.keys.map do |key|
         values_hash[key] = field_value(key, specification_hash, line )
       end
 
-      method_name = change_name(field_value(attr_name,specification_hash,line))
+      method_name = change_name(field_value(attr_name, specification_hash, line))
 
       add_method_to_pos_attr(method_name)
       self.instance_eval "
@@ -234,7 +227,7 @@ class Posifile
         end
       "
     else
-      specification_hash.each do |key, not_used|
+      specification_hash.each_key do |key|
         add_method_to_pos_attr(key)
         self.instance_eval "
           def #{key}
