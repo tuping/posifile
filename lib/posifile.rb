@@ -38,7 +38,7 @@ class Posifile
     @@attr_names[class_name] ||= []
     length_before = @@attr_names[class_name].length
     @@conditions[class_name] ||= []
-    @@conditions[class_name] << { range, value }
+    @@conditions[class_name] << { range => value }
     yield
     length_after = @@attr_names[class_name].length
     if length_before == length_after

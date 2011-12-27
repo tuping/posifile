@@ -1,3 +1,4 @@
+$LOAD_PATH << "."
 require 'posifile'
 require 'test/unit'
 require 'test_helpers'
