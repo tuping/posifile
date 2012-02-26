@@ -11,7 +11,7 @@ class OtherClass < MyClass
 end
 
 class TestInheritance < Test::Unit::TestCase
-	# Here we test how deep in subclasses the library is gonna work (beacase there are self and self.class references in the code)
+	# Here we test how deep in subclasses the library is gonna work (because there are self and self.class references in the code)
 
 	include TestHelpers
 
