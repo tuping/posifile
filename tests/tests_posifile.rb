@@ -46,5 +46,12 @@ class TestPosifile < Test::Unit::TestCase
 			no_spec = NoSpec.new("samples/sample.txt")
 		end
 	end
+	
+	def test_passing_position_file_as_text
+	  client = Client.new(:text => File.open("samples/sample.txt").read)
+
+  	assert_equal "jose", client.field_value("name", {"name" => 0..10, "city" => 11..31, "country" => 32..42}, "jose       new york             brazil    ")
+	  assert_equal "jose", client.name
+	end
 
 end

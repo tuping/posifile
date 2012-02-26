@@ -1,6 +1,5 @@
-class FieldsNotSpecified < Exception
-end
-class InvalidFieldName < Exception
-end
-class InvalidAttrName < Exception
-end
+class FieldsNotSpecified < StandardError; end
+class InvalidFieldName < StandardError; end
+class InvalidAttrName < StandardError; end
+class InvalidPositionFileFormat < StandardError; end
+

@@ -10,8 +10,14 @@ class Posifile
 
   attr_accessor :data_file, :raw_content
 
-  def initialize(data_file_name)
-    @data_file = data_file_name
+  def initialize(data_file_name_or_text)
+    if data_file_name_or_text.class == String
+      @data_file = data_file_name_or_text
+    elsif data_file_name_or_text .class == Hash
+      @file_content = [data_file_name_or_text[:text]]
+    else
+      raise InvalidPositionFileFormat, "Pass a file path or text."
+    end
 
     check_specification_hash
     file_content.each do |line|
@@ -167,11 +173,15 @@ class Posifile
   end
 
   def file_content
-    if raw_content.nil?
-      file = File.open(@data_file, "r")
-      @raw_content = file.readlines
+    if @data_file
+      if raw_content.nil?
+        file = File.open(@data_file, "r")
+        @raw_content = file.readlines
+      end
+      return @raw_content
+    else
+      @file_content
     end
-    @raw_content
   end
 
   # Get the value of a specifc position declared in the specification hash
