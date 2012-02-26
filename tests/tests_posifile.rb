@@ -13,7 +13,6 @@ class TestPosifile < Test::Unit::TestCase
 	def setup
 		create_sample_file
 		create_sample_file2
-		create_sample_invalid
 	end
 
 	def test_posifile
