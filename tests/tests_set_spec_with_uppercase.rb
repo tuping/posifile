@@ -11,7 +11,7 @@ class TestPosifile < Test::Unit::TestCase
 
 	def test_set_spec_with_uppercase
 		assert_raise(InvalidFieldName) do
-			SpecWithUppercase.set_specification("Name"=>0..10, "CITY"=>11..31,"country"=>32..42)
+			SpecWithUppercase.set_specification("Name" => 0..10, "CITY" => 11..31, "country" => 32..42)
 		end
 	end
 

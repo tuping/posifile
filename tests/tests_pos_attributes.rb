@@ -7,7 +7,7 @@ class MultiLinesWithTwoSpecs3 < Posifile
 
 	# two specifications, for a multi-line file
 	lines_where 0..2, "001" do
-		set_specification( "color"=>13..22,"brand"=>3..12)
+		set_specification( "color" => 13..22, "brand" => 3..12)
 		set_attr_name :brand
 	end
 end

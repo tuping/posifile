@@ -7,7 +7,6 @@ class NoSpec < Posifile
 end
 
 class TestPosifile < Test::Unit::TestCase
-# Here are general tests
 
 	include TestHelpers
 
@@ -36,7 +35,7 @@ class TestPosifile < Test::Unit::TestCase
 
 	def test_field_value
 		c = Client.new("samples/sample.txt")
-		assert_equal "jose", c.field_value("name",{"name"=>0..10, "city"=>11..31, "country"=>32..42}, "jose       new york             brazil    ")
+		assert_equal "jose", c.field_value("name", {"name" => 0..10, "city" => 11..31, "country" => 32..42}, "jose       new york             brazil    ")
 	end
 
 	def test_higher
